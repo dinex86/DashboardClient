@@ -6,13 +6,13 @@ $(document).ready(function ()
 {
 	createRpmBarMarkers();
 	wakeUpServer();
-    setInterval(function () { wakeUpServer(); }, 3000);
+	setInterval(function () { wakeUpServer(); }, 3000);
 });
 
 function wakeUpServer() {
-    if (ws == null || (ws != undefined && ws.readyState != ws.OPEN)) {
-        startClient();
-    }
+	if (ws == null || (ws != undefined && ws.readyState != ws.OPEN)) {
+		startClient();
+	}
 }
 
 function startClient() {
@@ -26,13 +26,13 @@ function startClient() {
 	};
 	
 	ws.onopen = function() {
-     	console.log('Socket Opened');
+	 	console.log('Socket Opened');
 	};
 
-    // when the connection is closed, this method is called
-    ws.onclose = function (evt) {
-        console.log('Socket Closed');
-    }
+	// when the connection is closed, this method is called
+	ws.onclose = function (evt) {
+		console.log('Socket Closed');
+	}
 	
 	ws.onmessage = function(message) {  
 		
