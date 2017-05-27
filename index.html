@@ -183,32 +183,7 @@
 			height: 30px;
 			margin: 0 10px;
 		}
-		
-		.flag_0>* {
-			/* green flag */
-			background-color: lime;
-		}
-		
-		.flag_xxx>* {
-			/* blue flag */
-			background-color: blue;
-		}
-		
-		.flag_xxx>* {
-			/* white flag */
-			background-color: white;
-		}
-		
-		.flag_2>*, .flag_3>* {
-			/* yellow flag */
-			background-color: yellow;
-		}
-		
-		.flag_xxx>* {
-			/* pending penalty */
-			background-color: #ff1919;
-		}
-		
+				
 		#delta.positive {
 			color: #ff1919;
 		}
@@ -230,9 +205,57 @@
 		}
 		
 		.p2p_cooldown {
-			color: ff1919;
+			color: #ff1919;
 		}
 		
+		#flag {
+			margin: 0 auto;
+			width: 60%;
+			height: 30pt;
+			border: 1px solid black;
+		}
+		
+		#flag.green {
+			border-color: lime;
+			background-color: lime;
+		}
+		
+		#flag.yellow {
+			border-color: yellow;
+			background-color: yellow;
+		}
+		
+		#flag.blue {
+			border-color: blue;
+			background-color: blue;
+		}
+		
+		#flag.penalty {
+			border-color: orange;
+			background-color: orange;
+		}
+		
+		#flag.white {
+			border-color: white;
+			background-color: white;
+		}
+		
+		#flag.black_white {
+			border-color: white;
+			background: linear-gradient(45deg, #FFF 50%, #000 50%);
+		}
+		
+		#flag.black {
+			border-color: white;
+			background-color: black;
+		}
+		
+		#flag.checkered {
+			border-color: white;
+			background: linear-gradient(45deg, #000 25%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 75%, #000 75%, #000 0), linear-gradient(45deg, #000 25%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 75%, #000 75%, #000 0), rgb(255, 255, 255);
+			background-position: 0 0, 10px 10px;
+			background-size: 20px 20px;
+		}
 	</style>
 </head>
 <body>
@@ -299,16 +322,16 @@
 			<div id="delta"></div>
 		</div>
 		<div class="box labelbox">
-			<span>fuel min.</span>
-			<div id="fuelminleft"></div>
-		</div>
-		<div class="box labelbox">
 			<span>drs</span>
 			<div id="drs"></div>
 		</div>
 		<div class="box labelbox">
 			<span>p2p</span>
 			<div id="p2p"></div>
+		</div>
+		<div class="box labelbox">
+			<span>flag</span>
+			<div id="flag"></div>
 		</div>
 		<div class="box labelbox">
 			<span>best time</span>

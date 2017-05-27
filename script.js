@@ -117,7 +117,7 @@ function update(json) {
 		if (json.DrsEngaged > 0) {
 			drsText = 'ACTIVE';
 		} else if (json.DrsNumActivationsLeft >= 0) {
-			drsText = json.DrsNumActivationsLeft > 1000 ? '∞' : json.DrsNumActivationsLeft;
+			drsText = json.DrsNumActivationsLeft > 1000 ? '&infin;' : json.DrsNumActivationsLeft;
 		} else {
 			drsText = 'DRS';
 		}
@@ -134,15 +134,15 @@ function update(json) {
 	//P2P
 	var p2pText = '-';
 	var p2pStyle = '';
-	if (json.DrsEquipped == 1) {
+	if (json.PushToPassEquipped == 1) {
 		if (json.PushToPassEngaged > 0) {
 			p2pText = json.PushToPassEngagedTimeLeft.toFixed(1);
 			p2pStyle = 'p2p_engaged';
-		} else if (json.PushToPassWaitTimeLeft >= 0) {
-			p2pText = json.PushToPassWaitTimeLeft.toFixed(1);
+		} else if (json.PushToPassWaitTimeLeft > 0) {
+			p2pText = json.PushToPassWaitTimeLeft.toFixed(0);
 			p2pStyle = 'p2p_cooldown';
-		} else if (PushToPassAvailable > 0) {
-			p2pText = json.PushToPassNumActivationsLeft > 1000 ? '∞' : json.PushToPassNumActivationsLeft;
+		} else if (json.PushToPassAvailable > 0) {
+			p2pText = json.PushToPassNumActivationsLeft > 1000 ? '&infin;' : json.PushToPassNumActivationsLeft;
 		} else {
 			p2pText = 'P2P';
 		}
@@ -159,38 +159,32 @@ function update(json) {
 	document.getElementById("clock").innerHTML = formatTime(Math.floor(Date.now() / 1000));
 	
 	//var delta = json.DeltaStats + "/" + json.DeltaLastLap + "/" + json.DeltaBestLap;
-	var delta = json.Delta;
-	/*if (json.LapTimeBest != '00:00:000' && json.SectorTimeDeltaSelf.Sector1 != 0)
-	{
-		delta += json.SectorTimeDeltaSelf.Sector1 - json.SectorTimeBestSelf.Sector1;
-	
-		if (json.SectorTimeDeltaSelf.Sector2 != 0)
-		{
-			delta += json.SectorTimeDeltaSelf.Sector2 - json.SectorTimeBestSelf.Sector2;
-		
-			if (json.SectorTimeDeltaSelf.Sector3 != 0)
-			{
-				delta += json.SectorTimeDeltaSelf.Sector3 - json.SectorTimeBestSelf.Sector3;
-			}
-		}
-	}*/
+	var delta = json.DeltaBestSelf;
 	
 	document.getElementById("delta").innerHTML = (delta >= 0 ? '+' : '') + delta.toFixed(3);
 	document.getElementById("delta").className = delta >= 0 ? 'positive' : 'negative';
 	
 	// Flags.
-	/*var x = document.getElementsByClassName("flag");
-	for (var i = 0; i < x.length; i++)
-	{
-		var className = "ledbox flag";
-		
-		if (json.Flags.StatusId > 0)
-		{
-			//className += " flag_" + json.Flags.StatusId;
-		}
-		
-		x[i].className = className;
-	}*/
+	var flagClass = '';
+	if (json.CurrentFlag == 0) {
+		flagClass = 'green';
+	} else if (json.CurrentFlag == 1) {
+		flagClass = 'yellow';
+	} else if (json.CurrentFlag == 2) {
+		flagClass = 'blue';
+	} else if (json.CurrentFlag == 3) {
+		flagClass = 'black';
+	} else if (json.CurrentFlag == 4) {
+		flagClass = 'black_white';
+	} else if (json.CurrentFlag == 5) {
+		flagClass = 'white';
+	} else if (json.CurrentFlag == 6) {
+		flagClass = 'checkered';
+	} else if (json.CurrentFlag == 7) {
+		flagClass = 'penalty';
+	}
+	
+	document.getElementById("flag").className = flagClass;
 }
 
 function formatLapTime(sec) {
