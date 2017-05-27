@@ -1,7 +1,6 @@
 var MAXRPM = 0;
 var shiftindicator = 0.985;
 var ws = null;
-var socketGuid = getGuid();
 
 $(document).ready(function ()
 {
@@ -28,9 +27,6 @@ function startClient() {
 	
 	ws.onopen = function() {
      	console.log('Socket Opened');
-		
-		//SendCommand("StreamLiveTiming", "1", "{}")
-		//SendCommand("StreamTrackMap", "1", "{}")
 	};
 
     // when the connection is closed, this method is called
@@ -49,50 +45,6 @@ function startClient() {
 		
 		update(json);
 	};
-}
-
-function SendCommand(commandName, sessionId, data) {
-    if (ws.readyState != ws.OPEN) {
-        startClient();
-    }
-
-    var sessionInfo = new Object();
-    sessionInfo.CommandName = commandName;
-    sessionInfo.SessionId = sessionId;
-    sessionInfo.SocketGuid = socketGuid;
-    sessionInfo.Data = data;
-
-    var msg = JSON.stringify(sessionInfo);
-
-    // Wait until the state of the socket is not ready and send the message when it is...
-    waitForSocketConnection(ws, function () {
-        //console.log("message sent!!!");
-        ws.send(msg);
-    });
-}
-
-// Make the function wait until the connection is made...
-function waitForSocketConnection(socket, callback) {
-    setTimeout(function () {
-		if (socket.readyState === 1) {
-			//console.log("Connection is made")
-			if (callback != null) {
-				callback();
-			}
-			return;
-
-		} else {
-			connTries++;
-
-			if (connTries > 50) {
-				sweetAlert({ title: ipAddress + ':' + port, text: 'No connection could be made on this IP & Port. Please make sure the listener is running and the IP & Port are <a href="http://dash.proracing.club/Index.html">correct</a>.', type: 'error', html: true });
-				return;
-			}
-
-			//console.log("wait for connection...")
-			waitForSocketConnection(socket, callback);
-		}
-	}, 50); // wait 5 milisecond for the connection...
 }
 
 function update(json) {
@@ -114,7 +66,7 @@ function update(json) {
 	document.getElementById("speed").innerHTML = json.CarSpeed.toFixed(0);
 	document.getElementById("gear").innerHTML = gear;
 	
-	// RPM.
+	// RPM stuff.	
 	if (json.MaxEngineRpm > 0)
 	{
 		updateMaxRpm(json.MaxEngineRpm, true);	
@@ -123,7 +75,6 @@ function update(json) {
 	{
 		updateMaxRpm(json.EngineRpm, false);
 	}
-	
 	var rpm_per = json.EngineRpm/MAXRPM;
 	
 	//document.getElementById("rpm").innerHTML = json.EngineRps.toFixed(0);
@@ -149,12 +100,11 @@ function update(json) {
 	document.getElementById("gear").className = rpm_per >= shiftindicator ? "shift_indicator blink" : "";
 	document.getElementById("speed").className = json.DrsEngaged ? "speed_drs_active" : "";
 	
+	// Fuel.
 	document.getElementById("fuellaps").innerHTML = json.FuelLapsLeftEstimate > 0 ? (Math.floor(json.FuelLapsLeftEstimate * 10) / 10).toFixed(1) : "-";
 	document.getElementById("fuel").innerHTML = (Math.floor(json.FuelLeft * 10) / 10).toFixed(1);
 	document.getElementById("avgfuel").innerHTML = json.FuelPerLap > 0 ? (Math.ceil(json.FuelPerLap * 10) / 10).toFixed(1) : "-";
-	//document.getElementById("fuelminleft").innerHTML = json.FuelEstimatedLeftInSecs > 0 ? Math.ceil(json.FuelStatistics.FuelEstimatedLeftInSecs / 60) : "-";
-	//document.getElementById("fuelrequired").innerHTML = json.FuelStatistics.FuelRequiredTillEndOfSession > 0 ? (Math.ceil(json.FuelStatistics.FuelRequiredTillEndOfSession * 10) / 10).toFixed(1) : "-";
-
+	
 	document.getElementById("lap").innerHTML = (json.NumberOfLaps > 0 && json.CompletedLaps >= json.NumberOfLaps ? json.NumberOfLaps : json.CompletedLaps + 1) + (json.NumberOfLaps > 0 ? "/" + json.NumberOfLaps : "");
 	document.getElementById("pos").innerHTML = json.Position + "/" + json.NumCars;
 	
@@ -253,8 +203,7 @@ function formatTime(sec) {
 
 function isNumber(n)
 {
-	return true;
-	//return !isNaN(parseFloat(n)) && isFinite(n);
+	return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
 function convertRpmToPercent(rpm_percent)
@@ -267,15 +216,6 @@ function updateMaxRpm(maxrpm_tmp, override)
 	if (maxrpm_tmp > MAXRPM || override) {
 		MAXRPM = maxrpm_tmp;
 	}
-}
-
-function getGuid() {
-	function S4() {
-	    return (((1+Math.random())*0x10000)|0).toString(16).substring(1); 
-	}
- 
-	// then to call it, plus stitch in '4' in the third group
-	return (S4() + S4() + "-" + S4() + "-4" + S4().substr(0,3) + "-" + S4() + "-" + S4() + S4() + S4()).toLowerCase();
 }
 
 function createRpmBarMarkers()
