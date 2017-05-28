@@ -2,8 +2,7 @@ var MAXRPM = 0;
 var shiftindicator = 0.985;
 var ws = null;
 
-$(document).ready(function ()
-{
+$(document).ready(function () {
 	createRpmBarMarkers();
 	wakeUpServer();
 	setInterval(function () { wakeUpServer(); }, 3000);
@@ -20,7 +19,7 @@ function startClient() {
 	console.info('connecting ' + wsAddress);
 	ws = new WebSocket(wsAddress);
 	var tmp = false;
-		
+	
 	ws.onerror = function(message) {
 		console.log('WebSocket Status: Error was reported');
 	};
@@ -34,8 +33,7 @@ function startClient() {
 		console.log('Socket Closed');
 	}
 	
-	ws.onmessage = function(message) {  
-		
+	ws.onmessage = function(message) {
 		var json = JSON.parse(message.data);
 	
 		if (tmp == false) {
@@ -49,14 +47,15 @@ function startClient() {
 
 function update(json) {
 	if (json.MaxEngineRpm == 0) {
-		document.getElementById("gear").innerHTML = '&nbsp;WAIT&nbsp;';
-		document.getElementById("speed").innerHTML = '&nbsp;NO&nbsp;GAME&nbsp;FOUND&nbsp;';
 		return;
 	}
 	
-	var gear = parseFloat(json.Gear);		
-	if (gear == 0) gear = 'N';
-	else if (gear == -1) gear = 'R';
+	var gear = parseFloat(json.Gear);
+	if (gear == 0) {
+		gear = 'N';
+	} else if (gear == -1) {
+		gear = 'R';
+	}
 	
 	if (json.CarSpeed == undefined) {
 		console.info(json);
@@ -67,12 +66,9 @@ function update(json) {
 	document.getElementById("gear").innerHTML = gear;
 	
 	// RPM stuff.	
-	if (json.MaxEngineRpm > 0)
-	{
-		updateMaxRpm(json.MaxEngineRpm, true);	
-	}
-	else
-	{
+	if (json.MaxEngineRpm > 0) {
+		updateMaxRpm(json.MaxEngineRpm, true);
+	} else {
 		updateMaxRpm(json.EngineRpm, false);
 	}
 	var rpm_per = json.EngineRpm/MAXRPM;
@@ -158,7 +154,7 @@ function update(json) {
 	document.getElementById("sessiontime").innerHTML = formatTime(json.SessionTimeRemaining);
 	document.getElementById("clock").innerHTML = moment().local().format("HH:mm:ss");
 	
-	//var delta = json.DeltaStats + "/" + json.DeltaLastLap + "/" + json.DeltaBestLap;
+	//Delta
 	if (json.LapTimeCurrentSelf > 0 && json.LapTimeBestSelf > 0) {
 		var delta = json.DeltaBestSelf;
 		
@@ -166,6 +162,7 @@ function update(json) {
 		document.getElementById("delta").className = delta >= 0 ? 'positive' : 'negative';
 	} else {
 		document.getElementById("delta").innerHTML = '-';
+		document.getElementById("delta").className = '';
 	}
 	
 	// Flags.
@@ -189,7 +186,6 @@ function update(json) {
 	}
 	
 	var flag = document.getElementById('flag');
-	console.info(flag.className);
 	if (flag.className != flagClass) {
 		flag.className = flagClass;
 	}
@@ -203,25 +199,21 @@ function formatTime(sec) {
 	return sec < 0 ? '-' : moment.utc(sec * 1000).format("HH:mm:ss");
 }
 
-function isNumber(n)
-{
+function isNumber(n) {
 	return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
-function convertRpmToPercent(rpm_percent)
-{
+function convertRpmToPercent(rpm_percent) {
 	return Math.pow(rpm_percent, 2) * 100;
 }
 
-function updateMaxRpm(maxrpm_tmp, override)
-{
+function updateMaxRpm(maxrpm_tmp, override) {
 	if (maxrpm_tmp > MAXRPM || override) {
 		MAXRPM = maxrpm_tmp;
 	}
 }
 
-function createRpmBarMarkers()
-{
+function createRpmBarMarkers() {
 	var rpmBar = document.getElementById("rpm_bar");
 	
 	// Remove old grid lines.
