@@ -10,90 +10,127 @@
 	<link rel="stylesheet" href="./style.css">
 </head>
 <body>
-	<div id="leds">
-		<div id="led1"><span></span></div>
-		<div id="led2"><span></span></div>
-		<div id="led3"><span></span></div>
-		<div id="led4"><span></span></div>
-		<div id="led5"><span></span></div>
-		<div id="led6"><span></span></div>
-		<div id="led7"><span></span></div>
-		<div id="led8"><span></span></div>
-		<div id="led9"><span></span></div>
-		<div id="led10"><span></span></div>
-		<div id="led11"><span></span></div>
-		<div id="led12"><span></span></div>
-	</div>
-	<div class="rpm_bar_frame">
-		<div id="rpm_bar"></div>
-	</div>
-	<div class="boxes">
-		<div class="box labelbox">
-			<span>fuel laps</span>
-			<div id="fuellaps"></div>
+	<div id="main">
+		<div id="fixed">
+			<div id="leds">
+				<div id="led1"><span></span></div>
+				<div id="led2"><span></span></div>
+				<div id="led3"><span></span></div>
+				<div id="led4"><span></span></div>
+				<div id="led5"><span></span></div>
+				<div id="led6"><span></span></div>
+				<div id="led7"><span></span></div>
+				<div id="led8"><span></span></div>
+				<div id="led9"><span></span></div>
+				<div id="led10"><span></span></div>
+				<div id="led11"><span></span></div>
+				<div id="led12"><span></span></div>
+			</div>
+			<div class="rpm_bar_frame">
+				<div id="rpm_bar"></div>
+			</div>
 		</div>
-		<div class="box labelbox">
-			<span>fuel</span>
-			<div id="fuel"></div>
+		<div id="first_screen" class="screen">
+			<div class="box labelbox">
+				<span>fuel laps</span>
+				<div id="fuellaps"></div>
+			</div>
+			<div class="box labelbox">
+				<span>fuel</span>
+				<div id="fuel"></div>
+			</div>
+			<div class="box labelbox">
+				<span>fuel/lap</span>
+				<div id="avgfuel"></div>
+			</div>
+			<div class="box labelbox gear_box">
+				<span>gear</span>
+				<div class="gear"></div>
+			</div>
+			<div class="box labelbox">
+				<span>lap time</span>
+				<div id="laptime"></div>
+			</div>
+			<div class="box labelbox">
+				<span>delta</span>
+				<div id="delta"></div>
+			</div>
+			<div class="box labelbox">
+				<span>drs</span>
+				<div id="drs"></div>
+			</div>
+			<div class="box labelbox">
+				<span>p2p</span>
+				<div id="p2p"></div>
+			</div>
+			<div class="box labelbox">
+				<span>flag</span>
+				<div id="flag"></div>
+			</div>
+			<div class="box labelbox">
+				<span>best time</span>
+				<div id="bestlap"></div>
+			</div>
+			<div class="box labelbox">
+				<span>last lap</span>
+				<div id="lastlap"></div>
+			</div>
+			<div class="box labelbox">
+				<span>pos.</span>
+				<div id="pos"></div>
+			</div>
+			<div class="box labelbox">
+				<span>lap</span>
+				<div id="lap"></div>
+			</div>
+			<div class="box labelbox">
+				<div></div>
+			</div>
+			<div id="speed_box" class="box">
+				<div id="speed"></div>
+			</div>
+			<div class="box labelbox">
+				<span>clock</span>
+				<div id="clock"></div>
+			</div>
+			<div class="box labelbox">
+				<span>session</span>
+				<div id="sessiontime"></div>
+			</div>
 		</div>
-		<div class="box labelbox">
-			<span>fuel/lap</span>
-			<div id="avgfuel"></div>
-		</div>
-		<div class="box labelbox" id="gear_box">
-			<span>gear</span>
-			<div id="gear"></div>
-		</div>
-		<div class="box labelbox">
-			<span>lap time</span>
-			<div id="laptime"></div>
-		</div>
-		<div class="box labelbox">
-			<span>delta</span>
-			<div id="delta"></div>
-		</div>
-		<div class="box labelbox">
-			<span>drs</span>
-			<div id="drs"></div>
-		</div>
-		<div class="box labelbox">
-			<span>p2p</span>
-			<div id="p2p"></div>
-		</div>
-		<div class="box labelbox">
-			<span>flag</span>
-			<div id="flag"></div>
-		</div>
-		<div class="box labelbox">
-			<span>best time</span>
-			<div id="bestlap"></div>
-		</div>
-		<div class="box labelbox">
-			<span>last lap</span>
-			<div id="lastlap"></div>
-		</div>
-		<div class="box labelbox">
-			<span>pos.</span>
-			<div id="pos"></div>
-		</div>
-		<div class="box labelbox">
-			<span>lap</span>
-			<div id="lap"></div>
-		</div>
-		<div class="box labelbox">
-			<span>pit limit.</span>
-			<div id="pitlimiter"></div>
-		</div>
-		<div id="speed_box" class="box">
-			<div id="speed"></div>
-		</div>
-		<div class="box labelbox">
-			<span>clock</span>
-			<div id="clock"></div>
-		</div>
-		<div class="box labelbox">
-			<span>session</span>
-			<div id="sessiontime"></div>
+		<div id="second_screen" class="screen" style="display: none;">
+			<div class="box labelbox">
+				<span>tires</span>
+				<div id="tires">
+					<div id="tire_temp_front_left"></div>
+					<div class="tire" id="tire_front_left"></div>
+					<div class="tire" id="tire_front_right"></div>
+					<div id="tire_temp_front_right"></div>
+					
+					<div id="tire_wear_front_left"></div>
+					<div id="tire_wear_front_right"></div>
+					<div id="tire_pressure_front_left"></div>
+					<div id="tire_pressure_front_right"></div>
+					
+					<div id="tire_temp_rear_left"></div>
+					<div class="tire" id="tire_rear_left"></div>
+					<div class="tire" id=" tire_rear_right"></div>
+					<div id="tire_temp_rear_right"></div>
+					
+					<div id="tire_wear_rear_left"></div>
+					<div id="tire_wear_rear_right"></div>
+					<div id="tire_pressure_rear_left"></div>
+					<div id="tire_pressure_rear_right"></div>
+				</div>
+			</div>
+			<div class="box labelbox gear_box">
+				<span>gear</span>
+				<div class="gear"></div>
+			</div>
+			<div class="box labelbox">
+				<span>timing<span>
+				<div></div>
+			</div>
 		</div>
 	</div>
 </body>
