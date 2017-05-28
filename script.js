@@ -98,7 +98,7 @@ function update(json) {
 	// Special styles.
 	document.getElementById("leds").className = rpm_per >= shiftindicator || json.PitLimiter ? "blink" : "";
 	document.getElementById("gear").className = rpm_per >= shiftindicator ? "shift_indicator blink" : "";
-	document.getElementById("speed").className = json.DrsEngaged ? "speed_drs_active" : "";
+	document.getElementById("speed").className = json.DrsEngaged ? "speed_drs_active blink" : "";
 	
 	// Fuel.
 	document.getElementById("fuellaps").innerHTML = json.FuelLapsLeftEstimate > 0 ? (Math.floor(json.FuelLapsLeftEstimate * 10) / 10).toFixed(1) : "-";
@@ -156,43 +156,51 @@ function update(json) {
 	document.getElementById("lastlap").innerHTML = formatLapTime(json.LapTimePreviousSelf);
 	document.getElementById("bestlap").innerHTML = formatLapTime(json.LapTimeBestSelf);
 	document.getElementById("sessiontime").innerHTML = formatTime(json.SessionTimeRemaining);
-	document.getElementById("clock").innerHTML = formatTime(Math.floor(Date.now() / 1000));
+	document.getElementById("clock").innerHTML = moment().local().format("HH:mm:ss");
 	
 	//var delta = json.DeltaStats + "/" + json.DeltaLastLap + "/" + json.DeltaBestLap;
-	var delta = json.DeltaBestSelf;
-	
-	document.getElementById("delta").innerHTML = (delta >= 0 ? '+' : '') + delta.toFixed(3);
-	document.getElementById("delta").className = delta >= 0 ? 'positive' : 'negative';
+	if (json.LapTimeCurrentSelf > 0 && json.LapTimeBestSelf > 0) {
+		var delta = json.DeltaBestSelf;
+		
+		document.getElementById("delta").innerHTML = (delta >= 0 ? '+' : '') + delta.toFixed(3);
+		document.getElementById("delta").className = delta >= 0 ? 'positive' : 'negative';
+	} else {
+		document.getElementById("delta").innerHTML = '-';
+	}
 	
 	// Flags.
 	var flagClass = '';
 	if (json.CurrentFlag == 0) {
 		flagClass = 'green';
 	} else if (json.CurrentFlag == 1) {
-		flagClass = 'yellow';
+		flagClass = 'yellow blink';
 	} else if (json.CurrentFlag == 2) {
-		flagClass = 'blue';
+		flagClass = 'blue blink';
 	} else if (json.CurrentFlag == 3) {
 		flagClass = 'black';
 	} else if (json.CurrentFlag == 4) {
 		flagClass = 'black_white';
 	} else if (json.CurrentFlag == 5) {
-		flagClass = 'white';
+		flagClass = 'white blink';
 	} else if (json.CurrentFlag == 6) {
 		flagClass = 'checkered';
 	} else if (json.CurrentFlag == 7) {
-		flagClass = 'penalty';
+		flagClass = 'penalty blink';
 	}
 	
-	document.getElementById("flag").className = flagClass;
+	var flag = document.getElementById('flag');
+	console.info(flag.className);
+	if (flag.className != flagClass) {
+		flag.className = flagClass;
+	}
 }
 
 function formatLapTime(sec) {
-	return sec < 0 ? '' : moment.utc(sec * 1000).format("mm:ss.SSS");
+	return sec <= 0 ? '-' : moment.utc(sec * 1000).format("mm:ss.SSS");
 }
 
 function formatTime(sec) {
-	return sec < 0 ? '' : moment.utc(sec * 1000).format("HH:mm:ss");
+	return sec < 0 ? '-' : moment.utc(sec * 1000).format("HH:mm:ss");
 }
 
 function isNumber(n)

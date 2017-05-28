@@ -11,11 +11,38 @@
 	<style>
 		html, head, body { 100%;overflow: hidden; padding-top: 30px;}
 		
-		@-webkit-keyframes blinker {
+		@keyframes blinker {
 			0% { opacity: 0.0; }
 			100% { opacity: 1.0; }
 		}
 		
+		@keyframes flash {
+			0% {
+				opacity: 1;
+			}
+			60% {
+				opacity: 1;
+			}
+			61% {
+				opacity: 0;
+			}
+			100% {
+				opacity: 0;
+			}
+		}
+		
+		@keyframes fadeOutWithDelay {
+			0% {
+				opacity: 1;
+			}
+			90% {
+			   opacity: 1;
+			}
+			100% {
+			   opacity: 0;
+			}
+		}
+
 		.blink {
 			animation-name: blinker;
 			animation-duration: 0.2s;
@@ -213,11 +240,15 @@
 			width: 60%;
 			height: 30pt;
 			border: 1px solid black;
+			opacity: 1;
 		}
 		
 		#flag.green {
+			opacity: 0;
 			border-color: lime;
 			background-color: lime;
+			
+			animation: fadeOutWithDelay 10s;
 		}
 		
 		#flag.yellow {
@@ -256,6 +287,15 @@
 			background-position: 0 0, 10px 10px;
 			background-size: 20px 20px;
 		}
+		
+		#flag.blink {
+			animation-name: flash;
+			animation-duration: 0.s;
+			animation-iteration-count:infinite;
+			animation-timing-function:steps();
+			animation-direction: alternate;
+
+	}
 	</style>
 </head>
 <body>
