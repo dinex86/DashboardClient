@@ -82,25 +82,25 @@ function update(json) {
 	//$("#rpm").html(json.EngineRps.toFixed(0);
 	$("#rpm_bar").width(convertRpmToPercent(rpm_per) + "%");
 	
-	$("#led1").className = rpm_per >= 0.500 ? "green" : "";
-	$("#led2").className = rpm_per >= 0.575 ? "green" : "";
-	$("#led3").className = rpm_per >= 0.650 ? "green" : "";
-	$("#led4").className = rpm_per >= 0.725 ? "green" : "";
+	$("#led1").attr('class', rpm_per >= 0.500 ? "green" : "");
+	$("#led2").attr('class', rpm_per >= 0.575 ? "green" : "");
+	$("#led3").attr('class', rpm_per >= 0.650 ? "green" : "");
+	$("#led4").attr('class', rpm_per >= 0.725 ? "green" : "");
 	
-	$("#led5").className = rpm_per >= 0.80 ? "yellow" : "";
-	$("#led6").className = rpm_per >= 0.83 ? "yellow" : "";
-	$("#led7").className = rpm_per >= 0.86 ? "yellow" : "";
-	$("#led8").className = rpm_per >= 0.89 ? "yellow" : "";
+	$("#led5").attr('class', rpm_per >= 0.80 ? "yellow" : "");
+	$("#led6").attr('class', rpm_per >= 0.83 ? "yellow" : "");
+	$("#led7").attr('class', rpm_per >= 0.86 ? "yellow" : "");
+	$("#led8").attr('class', rpm_per >= 0.89 ? "yellow" : "");
 	
-	$("#led9").className  = rpm_per >= 0.91 ? "red" : "";
-	$("#led10").className = rpm_per >= 0.93 ? "red" : "";
-	$("#led11").className = rpm_per >= 0.95 ? "red" : "";
-	$("#led12").className = rpm_per >= 0.97 ? "red" : "";
+	$("#led9").attr('class',  rpm_per >= 0.91 ? "red" : "");
+	$("#led10").attr('class', rpm_per >= 0.93 ? "red" : "");
+	$("#led11").attr('class', rpm_per >= 0.95 ? "red" : "");
+	$("#led12").attr('class', rpm_per >= 0.97 ? "red" : "");
 	
 	// Special styles.
-	$("#leds").className = rpm_per >= shiftindicator || json.PitLimiter ? "blink" : "";
-	$(".gear").className = rpm_per >= shiftindicator ? "shift_indicator blink" : "";
-	$("#speed").className = json.DrsEngaged ? "speed_drs_active blink" : "";
+	$("#leds").attr('class', rpm_per >= shiftindicator || json.PitLimiter ? "blink" : "");
+	//$(".gear").attr('class', rpm_per >= shiftindicator ? "shift_indicator blink" : "");
+	//$(".speed").attr('class', json.DrsEngaged ? "speed_drs_active blink" : "");
 	
 	// Fuel.
 	$("#fuellaps").html(json.FuelLapsLeftEstimate > 0 ? (Math.floor(json.FuelLapsLeftEstimate * 10) / 10).toFixed(1) : "-");
@@ -129,7 +129,7 @@ function update(json) {
 	}
 
 	$("#drs").html(drsText);
-	$("#drs").className = drsStyle;
+	$("#drs").attr('class', drsStyle);
 	
 	//P2P
 	var p2pText = '-';
@@ -149,7 +149,7 @@ function update(json) {
 	}
 
 	$("#p2p").html(p2pText);
-	$("#p2p").className = p2pStyle;
+	$("#p2p").attr('class', p2pStyle);
 	
 	// Times.
 	$("#laptime").html(formatLapTime(json.LapTimeCurrentSelf));
@@ -163,10 +163,10 @@ function update(json) {
 		var delta = json.DeltaBestSelf;
 		
 		$("#delta").html((delta >= 0 ? '+' : '') + delta.toFixed(3));
-		$("#delta").className = delta >= 0 ? 'positive' : 'negative';
+		$("#delta").attr('class', delta >= 0 ? 'positive' : 'negative');
 	} else {
 		$("#delta").html('-');
-		$("#delta").className = '';
+		$("#delta").removeClass();
 	}
 	
 	// Flags.
@@ -189,26 +189,38 @@ function update(json) {
 		flagClass = 'penalty blink';
 	}
 	
-	var flag = document.getElementById('flag');
-	if (flag.className != flagClass) {
-		flag.className = flagClass;
+	var flag = $('#flag');
+	if (!flag.hasClass(flagClass)) {
+		flag.attr('class', flagClass);
 	}
 	
 	// Tires.
-	$('#tire_temp_front_left').html(Math.floor(json.TireTempFrontLeft) + '°C');
-	$('#tire_temp_front_right').html(Math.floor(json.TireTempFrontRight) + '°C');
-	$('#tire_temp_rear_left').html(Math.floor(json.TireTempRearLeft) + '°C');
-	$('#tire_temp_rear_right').html(Math.floor(json.TireTempRearRight) + '°C');
+	$('#tire_temp_front_left').html(json.TireTempFrontLeft > -1 ? Math.floor(json.TireTempFrontLeft) + '°C' : 'N/A');
+	$('#tire_temp_front_right').html(json.TireTempFrontRight > -1 ? Math.floor(json.TireTempFrontRight) + '°C' : 'N/A');
+	$('#tire_temp_rear_left').html(json.TireTempRearLeft > -1 ? Math.floor(json.TireTempRearLeft) + '°C' : 'N/A');
+	$('#tire_temp_rear_right').html(json.TireTempRearRight > -1 ? Math.floor(json.TireTempRearRight) + '°C' : 'N/A');
 	
-	$('#tire_wear_front_left').html(Math.floor(json.TireWearFrontLeft) + '%');
-	$('#tire_wear_front_right').html(Math.floor(json.TireWearFrontRight) + '%');
-	$('#tire_wear_rear_left').html(Math.floor(json.TireWearRearLeft) + '%');
-	$('#tire_wear_rear_right').html(Math.floor(json.TireWearRearRight) + '%');
+	$('#tire_wear_front_left').html(json.TireWearFrontLeft > -1 ? Math.floor(json.TireWearFrontLeft * 100.0) + '%' : 'N/A');
+	$('#tire_wear_front_right').html(json.TireWearFrontRight > -1 ? Math.floor(json.TireWearFrontRight * 100.0) + '%' : 'N/A');
+	$('#tire_wear_rear_left').html(json.TireWearRearLeft > -1 ? Math.floor(json.TireWearRearLeft * 100.0) + '%' : 'N/A');
+	$('#tire_wear_rear_right').html(json.TireWearRearRight > -1 ? Math.floor(json.TireWearRearRight * 100.0) + '%' : 'N/A');
 	
-	$('#tire_pressure_front_left').html(Math.floor(json.TirePressureFrontLeft) + 'psi');
-	$('#tire_pressure_front_right').html(Math.floor(json.TirePressureFrontRight) + 'psi');
-	$('#tire_pressure_rear_left').html(Math.floor(json.TirePressureRearLeft) + 'psi');
-	$('#tire_pressure_rear_right').html(Math.floor(json.TirePressureRearRight) + 'psi');
+	$('#tire_pressure_front_left').html(json.TirePressureFrontLeft > -1 ? Math.floor(json.TirePressureFrontLeft) + 'psi' : 'N/A');
+	$('#tire_pressure_front_right').html(json.TirePressureFrontRight > -1 ? Math.floor(json.TirePressureFrontRight) + 'psi' : 'N/A');
+	$('#tire_pressure_rear_left').html(json.TirePressureRearLeft > -1 ? Math.floor(json.TirePressureRearLeft) + 'psi' : 'N/A');
+	$('#tire_pressure_rear_right').html(json.TirePressureRearRight > -1 ? Math.floor(json.TirePressureRearRight) + 'psi' : 'N/A');
+	
+	updateTireWear('tire_front_left', json.TireWearFrontLeft);
+	updateTireWear('tire_front_right', json.TireWearFrontRight);
+	updateTireWear('tire_rear_left', json.TireWearRearLeft);
+	updateTireWear('tire_rear_right', json.TireWearRearRight);
+}
+
+function updateTireWear(id, value) {
+	$('#' + id + ' div').height(100.0 - (value * 100.0) + '%');
+	$('#' + id).toggleClass('yellow', value > 0.45 && value <= 0.7);
+	$('#' + id).toggleClass('orange', value > 0.3 && value <= 0.45);
+	$('#' + id).toggleClass('red', value <= 0.3);
 }
 
 function formatLapTime(sec) {
