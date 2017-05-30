@@ -141,21 +141,28 @@ div.labelbox>div {
 .screen {
 	display: grid;
 	grid-gap: 15px 7px;
+	grid-template-columns: 2fr 2fr 2fr 3fr 3fr 3fr;
+	height: 300px;
 }
 
 #first_screen {
-	grid-template-columns: 2fr 2fr 2fr 3fr 3fr 3fr;
+	grid-template-rows: 1fr 1fr 1fr;
 }
 
 #second_screen {
-	grid-template-columns: 3fr 3fr 3fr 6fr;
+	grid-template-columns: 3fr 3fr 3fr 3fr 3fr;
+	grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr; 
 }
 	
-.gear_box {
+#first_screen .gear_box {
 	grid-row: auto / span 2;
 }
 
-#speed_box {
+#second_screen .gear_box {
+	grid-row: auto / span 4;
+}
+
+.speed_box {
 	font-size: 40pt;
 	line-height: 53pt;
 }
@@ -253,22 +260,37 @@ div.labelbox>div {
 	animation-direction: alternate;
 }
 
+#timing {
+	grid-column: auto / span 2;
+	grid-row: auto / span 6;
+}
+
 #tire_conditions {
 	grid-column: auto / span 2;
+	grid-row: auto / span 3;
 }
 
 #tire_conditions>div {
 	display: grid;
-	grid-template-columns: auto 40px 40px auto;
+	grid-template-columns: 1fr 40px 40px 1fr;
 	grid-gap: 5px 5px;
-	line-height: 41pt;
+	line-height: 40pt;
 }
 
 #tire_temps, #tire_pressures {
+	grid-column: auto / span 1;
+	grid-row: auto / span 3;
+}
+
+#tire_temps>div, #tire_pressures>div {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	font-size: 16pt;
+	font-size: 20pt;
 	grid-gap: 5px 0px;
+}
+
+#second_screen .speed_box {
+	grid-row: auto / span 2;
 }
 
 div.tire_left {
@@ -282,10 +304,10 @@ div.tire_right {
 }
 
 div.tire {
-	border-radius: 10px;
+	border-radius: 7px;
 	border: 2px solid white;
-	height: 46px;
-	width: 30px;
+	height: 42px;
+	width: 26px;
 	overflow: hidden;
 	text-align: center;
 	padding: 2px;
