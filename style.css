@@ -279,7 +279,7 @@ div.tire {
 
 div.tire.orange, div.tire.red {
 	animation-name: blinker-bg;
-	animation-iteration-count:infinite;
+	animation-iteration-count: infinite;
 	animation-timing-function: ease-in-out;
 }
 
@@ -289,16 +289,12 @@ div.tire.yellow  {
 
 div.tire.orange  {
 	background-color: orange;
-	
-	animation-duration: 1.4s;
-	animation-timing-function:steps(30);
+	animation-duration: 1.5s;
 }
 
 div.tire.red  {
 	background-color: red;
-	
-	animation-duration: .7s;
-	animation-timing-function:steps(20);
+	animation-duration: .75s;
 }
 
 #tires  div.tire div {
