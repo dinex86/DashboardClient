@@ -297,9 +297,19 @@ div.tire.red  {
 	animation-duration: .75s;
 }
 
-#tires  div.tire div {
+div.tire div.wear {
 	height: 0%;
 	background-color: #000;
+}
+
+div.tire div.dirt {
+    background-color: purple;
+    width: 40%;
+    margin: auto;
+    height: 100%;
+    position: relative;
+    bottom: 0;
+    top: 100%;
 }
 
 @keyframes blinker {

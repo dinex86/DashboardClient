@@ -208,21 +208,22 @@ function update(json) {
 	$('#tire_pressure_rear_left').html(json.TirePressureRearLeft > -1 ? Math.floor(json.TirePressureRearLeft) + 'psi' : 'N/A');
 	$('#tire_pressure_rear_right').html(json.TirePressureRearRight > -1 ? Math.floor(json.TirePressureRearRight) + 'psi' : 'N/A');
 	
-	updateTireWear('tire_front_left', json.TireWearFrontLeft);
-	updateTireWear('tire_front_right', json.TireWearFrontRight);
-	updateTireWear('tire_rear_left', json.TireWearRearLeft);
-	updateTireWear('tire_rear_right', json.TireWearRearRight);
+	updateTireWear('tire_front_left', json.TireWearFrontLeft, json.TireDirtFrontLeft);
+	updateTireWear('tire_front_right', json.TireWearFrontRight, json.TireDirtFrontRight);
+	updateTireWear('tire_rear_left', json.TireWearRearLeft, json.TireDirtRearLeft);
+	updateTireWear('tire_rear_right', json.TireWearRearRight, json.TireDirtRearRight);
 }
 
-function updateTireWear(id, value) {
+function updateTireWear(id, wear, dirt) {
 	var yellowUnder = 0.7;
 	var orangeUnder = 0.45;
 	var redUnder = 0.25;
 	
-	$('#' + id + ' div').height(100.0 - (value * 100.0) + '%');
-	$('#' + id).toggleClass('yellow', value >= orangeUnder && value < yellowUnder);
-	$('#' + id).toggleClass('orange', value >= redUnder && value < orangeUnder);
-	$('#' + id).toggleClass('red', value < redUnder);
+	$('#' + id + ' div.wear').height(100.0 - (wear * 100.0) + '%');
+	$('#' + id + ' div.dirt').css('top', 100.0 - (dirt * 100.0) + '%');
+	$('#' + id).toggleClass('yellow', wear >= orangeUnder && wear < yellowUnder);
+	$('#' + id).toggleClass('orange', wear >= redUnder && wear < orangeUnder);
+	$('#' + id).toggleClass('red', wear < redUnder);
 }
 
 function formatLapTime(sec) {
