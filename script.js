@@ -1,5 +1,5 @@
 var MAXRPM = 0;
-var shiftindicator = 0.985;
+var shiftindicator = 0.98;
 var ws = null;
 
 $(document).ready(function () {
@@ -82,25 +82,25 @@ function update(json) {
 	//$("#rpm").html(json.EngineRps.toFixed(0);
 	$("#rpm_bar").width(convertRpmToPercent(rpm_per) + "%");
 	
-	$("#led1").attr('class', rpm_per >= 0.500 ? "green" : "");
-	$("#led2").attr('class', rpm_per >= 0.575 ? "green" : "");
-	$("#led3").attr('class', rpm_per >= 0.650 ? "green" : "");
-	$("#led4").attr('class', rpm_per >= 0.725 ? "green" : "");
+	$("#led1").toggleClass('green', rpm_per >= 0.500);
+	$("#led2").toggleClass('green', rpm_per >= 0.575);
+	$("#led3").toggleClass('green', rpm_per >= 0.650);
+	$("#led4").toggleClass('green', rpm_per >= 0.725);
 	
-	$("#led5").attr('class', rpm_per >= 0.80 ? "yellow" : "");
-	$("#led6").attr('class', rpm_per >= 0.83 ? "yellow" : "");
-	$("#led7").attr('class', rpm_per >= 0.86 ? "yellow" : "");
-	$("#led8").attr('class', rpm_per >= 0.89 ? "yellow" : "");
+	$("#led5").toggleClass('yellow', rpm_per >= 0.80);
+	$("#led6").toggleClass('yellow', rpm_per >= 0.83);
+	$("#led7").toggleClass('yellow', rpm_per >= 0.86);
+	$("#led8").toggleClass('yellow', rpm_per >= 0.89);
 	
-	$("#led9").attr('class',  rpm_per >= 0.91 ? "red" : "");
-	$("#led10").attr('class', rpm_per >= 0.93 ? "red" : "");
-	$("#led11").attr('class', rpm_per >= 0.95 ? "red" : "");
-	$("#led12").attr('class', rpm_per >= 0.97 ? "red" : "");
+	$("#led9").toggleClass('red',  rpm_per >= 0.91);
+	$("#led10").toggleClass('red', rpm_per >= 0.93);
+	$("#led11").toggleClass('red', rpm_per >= 0.95);
+	$("#led12").toggleClass('red', rpm_per >= 0.97);
 	
 	// Special styles.
-	$("#leds").attr('class', rpm_per >= shiftindicator || json.PitLimiter ? "blink" : "");
-	//$(".gear").attr('class', rpm_per >= shiftindicator ? "shift_indicator blink" : "");
-	//$(".speed").attr('class', json.DrsEngaged ? "speed_drs_active blink" : "");
+	$("#leds").toggleClass('blink', rpm_per >= shiftindicator || json.PitLimiter);
+	$(".gear").toggleClass('shift_indicator blink', rpm_per >= shiftindicator);
+	$(".speed").toggleClass('speed_drs_active blink', json.DrsEngaged > 0);
 	
 	// Fuel.
 	$("#fuellaps").html(json.FuelLapsLeftEstimate > 0 ? (Math.floor(json.FuelLapsLeftEstimate * 10) / 10).toFixed(1) : "-");
@@ -111,8 +111,8 @@ function update(json) {
 	$("#pos").html(json.Position + "/" + json.NumCars);
 	
 	// DRS
+	var drs = $("#drs");
 	var drsText = '-';
-	var drsStyle = '';
 	if (json.DrsEquipped == 1) {
 		if (json.DrsEngaged > 0) {
 			drsText = 'ACTIVE';
@@ -122,16 +122,13 @@ function update(json) {
 			drsText = 'DRS';
 		}
 		
-		if (json.DrsAvailable == 0) {
-			// Style.
-			drsStyle = 'drs_available';
-		}
+		drs.toggleClass('drs_available', json.DrsAvailable == 1);
 	}
 
-	$("#drs").html(drsText);
-	$("#drs").attr('class', drsStyle);
+	drs.html(drsText);
 	
 	//P2P
+	var p2p = $("#p2p");
 	var p2pText = '-';
 	var p2pStyle = '';
 	if (json.PushToPassEquipped == 1) {
@@ -148,8 +145,8 @@ function update(json) {
 		}
 	}
 
-	$("#p2p").html(p2pText);
-	$("#p2p").attr('class', p2pStyle);
+	p2p.html(p2pText);
+	p2p.attr('class', p2pStyle);
 	
 	// Times.
 	$("#laptime").html(formatLapTime(json.LapTimeCurrentSelf));
@@ -163,7 +160,8 @@ function update(json) {
 		var delta = json.DeltaBestSelf;
 		
 		$("#delta").html((delta >= 0 ? '+' : '') + delta.toFixed(3));
-		$("#delta").attr('class', delta >= 0 ? 'positive' : 'negative');
+		$("#delta").toggleClass('positive', delta >= 0);
+		$("#delta").toggleClass('negative', delta < 0);
 	} else {
 		$("#delta").html('-');
 		$("#delta").removeClass();
@@ -217,10 +215,14 @@ function update(json) {
 }
 
 function updateTireWear(id, value) {
+	var yellowUnder = 0.7;
+	var orangeUnder = 0.45;
+	var redUnder = 0.25;
+	
 	$('#' + id + ' div').height(100.0 - (value * 100.0) + '%');
-	$('#' + id).toggleClass('yellow', value > 0.45 && value <= 0.7);
-	$('#' + id).toggleClass('orange', value > 0.3 && value <= 0.45);
-	$('#' + id).toggleClass('red', value <= 0.3);
+	$('#' + id).toggleClass('yellow', value >= orangeUnder && value < yellowUnder);
+	$('#' + id).toggleClass('orange', value >= redUnder && value < orangeUnder);
+	$('#' + id).toggleClass('red', value < redUnder);
 }
 
 function formatLapTime(sec) {
