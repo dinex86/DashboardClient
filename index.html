@@ -99,28 +99,18 @@
 			</div>
 		</div>
 		<div id="second_screen" class="screen" style="display: none;">
-			<div class="box labelbox">
-				<span>tires</span>
-				<div id="tires">
-					<div id="tire_temp_front_left"></div>
+			<div class="box labelbox" id="tire_conditions">
+				<span>tire conditions</span>
+				<div>
+					<div id="tire_wear_front_left" class="tire_left">100%</div>
 					<div class="tire" id="tire_front_left"><div class="wear"></div><div class="dirt"></div></div>
 					<div class="tire" id="tire_front_right"><div class="wear"></div><div class="dirt"></div></div>
-					<div id="tire_temp_front_right"></div>
+					<div id="tire_wear_front_right" class="tire_right">100%</div>
 					
-					<div id="tire_wear_front_left"></div>
-					<div id="tire_wear_front_right"></div>
-					<div id="tire_pressure_front_left"></div>
-					<div id="tire_pressure_front_right"></div>
-					
-					<div id="tire_temp_rear_left"></div>
+					<div id="tire_wear_rear_left" class="tire_left">100%</div>
 					<div class="tire" id="tire_rear_left"><div class="wear"></div><div class="dirt"></div></div>
 					<div class="tire" id="tire_rear_right"><div class="wear"></div><div class="dirt"></div></div>
-					<div id="tire_temp_rear_right"></div>
-					
-					<div id="tire_wear_rear_left"></div>
-					<div id="tire_wear_rear_right"></div>
-					<div id="tire_pressure_rear_left"></div>
-					<div id="tire_pressure_rear_right"></div>
+					<div id="tire_wear_rear_right" class="tire_right">100%</div>
 				</div>
 			</div>
 			<div class="box labelbox gear_box">
@@ -130,6 +120,28 @@
 			<div class="box labelbox">
 				<span>timing<span>
 				<div></div>
+			</div>
+			
+			<div class="box labelbox">
+				<span>tire temps</span>
+				<div id="tire_temps">
+					<div id="tire_pressure_front_left" class="tire_left">95°C</div>
+					<div id="tire_pressure_front_right" class="tire_right">95°C</div>
+					<div id="tire_pressure_rear_left" class="tire_left">95°C</div>
+					<div id="tire_pressure_rear_right" class="tire_right">95°C</div>
+				</div>
+			</div>
+			<div class="box labelbox">
+				<span>tire pressure</span>
+				<div id="tire_pressures">
+					<div id="tire_temp_front_left" class="tire_left">25.1psi</div>
+					<div id="tire_temp_front_right" class="tire_right">25.1psi</div>
+					<div id="tire_temp_rear_left" class="tire_left">25.1psi</div>
+					<div id="tire_temp_rear_right" class="tire_right">25.1psi</div>
+				</div>
+			</div>
+			<div id="speed_box" class="box">
+				<div class="speed"></div>
 			</div>
 		</div>
 	</div>
