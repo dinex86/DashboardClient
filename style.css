@@ -1,6 +1,7 @@
 html, head, body {
 	height: 100%;
 	overflow: hidden;
+	cursor: default;
 }
 
 #main {
@@ -9,12 +10,11 @@ html, head, body {
 	margin: auto;
 	overflow: hidden;
 	padding-top: 30px;
-	border: 1px dashed #333;
 }
 
 .blink {
-	animation-name: blinker;
-	animation-duration: 0.2s;
+	animation-name: flash;
+	animation-duration: 0.25s;
 	animation-iteration-count:infinite;
 	animation-timing-function:steps(3);
 	animation-direction: alternate;
@@ -30,7 +30,7 @@ body {
 }
 
 #fixed {
-	padding-bottom: 10px;
+	padding-bottom: 8px;
 }
 
 #leds {
@@ -129,7 +129,7 @@ div.labelbox>span {
 }
 
 div.labelbox>div {
-	transform: translateY(-12pt);
+	transform: translateY(-11pt);
 }
 	
 .gear_box>div {
@@ -142,7 +142,7 @@ div.labelbox>div {
 	display: grid;
 	grid-gap: 15px 7px;
 	grid-template-columns: 2fr 2fr 2fr 3fr 3fr 3fr;
-	height: 300px;
+	height: 270px;
 }
 
 #first_screen {
@@ -162,9 +162,9 @@ div.labelbox>div {
 	grid-row: auto / span 4;
 }
 
-.speed_box {
-	font-size: 40pt;
-	line-height: 53pt;
+.speed_box>div {
+	font-size: 50pt;
+	line-height: 55pt;
 }
 
 #rpm_box {
@@ -183,11 +183,11 @@ div.labelbox>div {
 	color: lime;
 }
 
-#gear.gear_shift_active {
+.gear.gear_shift_active {
 	color: lime;
 }
 
-#gear.shift_indicator {
+.gear.shift_indicator {
 	color: #ff1919 !important;
 }
 
@@ -252,14 +252,6 @@ div.labelbox>div {
 	background-size: 20px 20px;
 }
 
-#flag.blink {
-	animation-name: flash;
-	animation-duration: 0.35s;
-	animation-iteration-count:infinite;
-	animation-timing-function:steps(4);
-	animation-direction: alternate;
-}
-
 #timing {
 	grid-column: auto / span 2;
 	grid-row: auto / span 6;
@@ -273,8 +265,9 @@ div.labelbox>div {
 #tire_conditions>div {
 	display: grid;
 	grid-template-columns: 1fr 40px 40px 1fr;
-	grid-gap: 5px 5px;
+	grid-gap: 2px 2px;
 	line-height: 40pt;
+	margin-top: -10px
 }
 
 #tire_temps, #tire_pressures {
@@ -286,7 +279,7 @@ div.labelbox>div {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	font-size: 20pt;
-	grid-gap: 5px 0px;
+	grid-gap: 15px 0px;
 }
 
 #second_screen .speed_box {
@@ -339,16 +332,18 @@ div.tire.red  {
 div.tire div.wear {
 	height: 0%;
 	background-color: #000;
+	width: 100%;
+	float: right;
 }
 
 div.tire div.dirt {
-    background-color: purple;
-    width: 40%;
-    margin: auto;
-    height: 100%;
-    position: relative;
-    bottom: 0;
-    top: 100%;
+	background-color: purple;
+	width: 50%;
+	margin: auto;
+	height: 100%;
+	position: relative;
+	bottom: 0;
+	top: 100%;
 }
 
 @keyframes blinker {

@@ -1,5 +1,5 @@
 var MAXRPM = 0;
-var shiftindicator = 0.98;
+var shiftindicator = 0.925;
 var ws = null;
 
 $(document).ready(function () {
@@ -98,9 +98,9 @@ function update(json) {
 	$("#led12").toggleClass('red', rpm_per >= 0.97);
 	
 	// Special styles.
-	$("#leds").toggleClass('blink', rpm_per >= shiftindicator || json.PitLimiter);
-	$(".gear").toggleClass('shift_indicator blink', rpm_per >= shiftindicator);
-	$(".speed").toggleClass('speed_drs_active blink', json.DrsEngaged > 0);
+	$("#leds div").toggleClass('blink', rpm_per >= shiftindicator || json.PitLimiter == 1);
+	$(".gear").toggleClass('shift_indicator', rpm_per >= shiftindicator);
+	$(".speed").toggleClass('speed_drs_active', json.DrsEngaged > 0);
 	
 	// Fuel.
 	$("#fuellaps").html(json.FuelLapsLeftEstimate > 0 ? (Math.floor(json.FuelLapsLeftEstimate * 10) / 10).toFixed(1) : "-");
@@ -115,7 +115,7 @@ function update(json) {
 	var drsText = '-';
 	if (json.DrsEquipped == 1) {
 		if (json.DrsEngaged > 0) {
-			drsText = 'ACTIVE';
+			drsText = 'DRS';
 		} else if (json.DrsNumActivationsLeft >= 0) {
 			drsText = json.DrsNumActivationsLeft > 1000 ? '&infin;' : json.DrsNumActivationsLeft;
 		} else {
@@ -123,6 +123,7 @@ function update(json) {
 		}
 		
 		drs.toggleClass('drs_available', json.DrsAvailable == 1);
+		drs.toggleClass('blink', json.DrsEngaged == 1);
 	}
 
 	drs.html(drsText);
@@ -219,8 +220,8 @@ function updateTireWear(id, wear, dirt) {
 	var orangeUnder = 0.45;
 	var redUnder = 0.25;
 	
-	$('#' + id + ' div.wear').height(100.0 - (wear * 100.0) + '%');
-	$('#' + id + ' div.dirt').css('top', 100.0 - (dirt * 100.0) + '%');
+	$('#' + id + ' div.wear').height((100.0 - (wear * 100.0)) + '%');
+	$('#' + id + ' div.dirt').css('top', (100.0 - (dirt * 100.0)) + '%');
 	$('#' + id).toggleClass('yellow', wear >= orangeUnder && wear < yellowUnder);
 	$('#' + id).toggleClass('orange', wear >= redUnder && wear < orangeUnder);
 	$('#' + id).toggleClass('red', wear < redUnder);
