@@ -4,7 +4,17 @@ html, head, body {
 	cursor: default;
 }
 
+body {
+	font-family: 'Roboto Condensed';
+	background-color: #111;
+	text-align: center;
+	padding: 0.5%;
+	margin: 0;
+	color: white;
+}
+
 #main {
+	background-color: #000;
 	width: 796px;
 	height: 480px;
 	margin: auto;
@@ -20,14 +30,6 @@ html, head, body {
 	animation-direction: alternate;
 }
 
-body {
-	font-family: 'Roboto Condensed';
-	background-color: #000;
-	text-align: center;
-	padding: 0.5%;
-	margin: 0;
-	color: white;
-}
 
 #fixed {
 	padding-bottom: 8px;
@@ -141,7 +143,7 @@ div.labelbox>div {
 .screen {
 	display: grid;
 	grid-gap: 15px 7px;
-	grid-template-columns: 2fr 2fr 2fr 3fr 3fr 3fr;
+	grid-template-columns: 2fr 2fr 2fr 150px 3fr 3fr;
 	height: 270px;
 }
 
@@ -150,7 +152,7 @@ div.labelbox>div {
 }
 
 #second_screen {
-	grid-template-columns: 3fr 3fr 3fr 3fr 3fr;
+	grid-template-columns: 3fr 3fr 150px 3fr 3fr;
 	grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr; 
 }
 	
@@ -344,6 +346,36 @@ div.tire div.dirt {
 	position: relative;
 	bottom: 0;
 	top: 100%;
+}
+
+/* Pit screen. */
+
+#pit_screen {
+	grid-template-columns: 2fr 3fr 2fr;
+	grid-template-rows: 1fr 1fr 1fr; 
+}
+
+#pit_screen .gear_box, #pit_screen .speed_box {
+	grid-row: auto / span 2;
+}
+
+#pit_screen .box div {
+	font-size: 40pt;
+}
+
+#pit_screen  .gear_box>div, #pit_screen  .speed_box>div {
+	font-size: 135pt;
+	line-height: 75%;
+}
+
+.pitlimiter>div {
+	background-color: red;
+	height: 100%;
+	line-height: 57pt;
+}
+
+.pitlimiter>div.active {
+	background-color: lime;
 }
 
 @keyframes blinker {
