@@ -40,6 +40,8 @@ var tirePressureFL;
 var tirePressureFR;
 var tirePressureRL;
 var tirePressureRR;
+var fuelRequired;
+var lapsToGo;
 
 $(document).ready(function () {
 	initElements();
@@ -61,9 +63,11 @@ function initElements() {
 	fuelLeft = $('.fuelleft');
 	fuelLaps = $('#fuellaps');
 	avgFuel = $('#avgfuel');
+	lapsToGo = $('#laps_to_go');
+	fuelRequired = $('#fuel_required');
 	
-	lap = $('lap');
-	pos = $('pos');
+	lap = $('#lap');
+	pos = $('#pos');
 	
 	lapTime = $('#laptime');
 	lastLap = $('#lastlap');
@@ -219,6 +223,11 @@ function update(json) {
 	fuelLeft.html((Math.floor(json.FuelLeft * 10) / 10).toFixed(1));
 	avgFuel.html(json.FuelPerLap > 0 ? (Math.ceil(json.FuelPerLap * 10) / 10).toFixed(1) : "-");
 	
+	fuelLaps.toggleClass('fuel_left_2_laps', json.FuelLapsLeftEstimate >= 0 && json.FuelLapsLeftEstimate <= 2);
+	fuelLaps.toggleClass('fuel_left_3_laps', json.FuelLapsLeftEstimate > 2 && json.FuelLapsLeftEstimate <= 3);
+	fuelLaps.toggleClass('fuel_left_4_laps', json.FuelLapsLeftEstimate > 3 && json.FuelLapsLeftEstimate <= 4);
+	
+	
 	lap.html((json.NumberOfLaps > 0 && json.CompletedLaps >= json.NumberOfLaps ? json.NumberOfLaps : json.CompletedLaps + 1) + (json.NumberOfLaps > 0 ? "/" + json.NumberOfLaps : ""));
 	pos.html(json.Position + "/" + json.NumCars);
 	
@@ -332,6 +341,13 @@ function update(json) {
 		
 		if (json.LastTimeOnTrack < json.LastTimeInPit) {
 			timeInPitLane.html(((json.LastTimeInPit - json.LastTimeOnTrack) / 1000).toFixed(1));
+			
+			lapsToGo.html(json.LapsUntilSessionEnd.toFixed(1));
+			fuelRequired.html(json.FuelRequiredUntilSessionEnd.toFixed(1));
+			
+			var sufficient = json.FuelLeft >= json.FuelRequiredUntilSessionEnd;
+			fuelRequired.toggleClass('fuel_required_sufficient', sufficient);
+			fuelRequired.toggleClass('fuel_required_insufficient', !sufficient);
 		}
 	} else {
 		// Only call once.
@@ -365,13 +381,14 @@ function formatTime(sec) {
 	return sec < 0 ? '-' : moment.utc(sec * 1000).format("HH:mm:ss");
 }
 
-function getSessionName(index) {
+function getSessionName(index, iteration) {
+	var iterationText = iteration > 0 ? ' #' + iteration : '';
 	if (index == 0) {
-		return 'Practice';
+		return 'Practice' + iterationText;
 	} else if (index == 1) {
-		return 'Qualifying';
+		return 'Qualifying' + iterationText;
 	} else if (index == 2) {
-		return 'Race';
+		return 'Race' + iterationText;
 	}
 	
 	return '-';

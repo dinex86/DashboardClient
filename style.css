@@ -254,6 +254,20 @@ div.labelbox>div {
 	background-size: 20px 20px;
 }
 
+.fuel_left_2_laps {
+	color: red;
+}
+
+.fuel_left_3_laps {
+	color: orange;
+}
+
+.fuel_left_4_laps {
+	color: yellow;
+}
+
+/* Second screen. */
+
 #timing {
 	grid-column: auto / span 2;
 	grid-row: auto / span 6;
@@ -376,6 +390,14 @@ div.tire div.dirt {
 
 .pitlimiter>div.active {
 	background-color: lime;
+}
+
+.fuel_required_sufficient {
+	color: lime;
+}
+
+.fuel_required_insufficient {
+	color: red;
 }
 
 @keyframes blinker {
