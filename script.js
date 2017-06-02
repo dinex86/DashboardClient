@@ -42,10 +42,16 @@ var tirePressureRL;
 var tirePressureRR;
 var fuelRequired;
 var lapsToGo;
+var waterTemp;
+var oilTemp;
+var airTemp;
+var trackTemp;
+var deltaFront;
+var deltaBehind;
 
 $(document).ready(function () {
 	initElements();
-	window.onclick = function() { switchScreen(false); };
+	window.onclick = function() { document.body.webkitRequestFullscreen(function() {}, function() {}); switchScreen(false); };
 	
 	wakeUpServer();
 	setInterval(function () { wakeUpServer(); }, 3000);
@@ -99,6 +105,14 @@ function initElements() {
 	tirePressureFR = $('#tire_pressure_front_right');
 	tirePressureRL = $('#tire_pressure_rear_left');
 	tirePressureRR = $('#tire_pressure_rear_right');
+	
+	waterTemp = $('.water_temp');
+	oilTemp = $('.oil_temp');
+	airTemp = $('.air_temp');
+	trackTemp = $('.track_temp');
+	
+	deltaFront = $('.delta_front');
+	deltaBehind = $('.delta_behind');
 	
 	// Init RPM bar.
 	rpmBar = $('#rpm_bar');
@@ -227,9 +241,14 @@ function update(json) {
 	fuelLaps.toggleClass('fuel_left_3_laps', json.FuelLapsLeftEstimate > 2 && json.FuelLapsLeftEstimate <= 3);
 	fuelLaps.toggleClass('fuel_left_4_laps', json.FuelLapsLeftEstimate > 3 && json.FuelLapsLeftEstimate <= 4);
 	
-	
 	lap.html((json.NumberOfLaps > 0 && json.CompletedLaps >= json.NumberOfLaps ? json.NumberOfLaps : json.CompletedLaps + 1) + (json.NumberOfLaps > 0 ? "/" + json.NumberOfLaps : ""));
 	pos.html(json.Position + "/" + json.NumCars);
+	
+	// Temps.
+	waterTemp.html(json.WaterTemperature > 0 ? json.WaterTemperature.toFixed(0) + '°C' : '-');
+	oilTemp.html(json.OilTemperature > 0 ? json.OilTemperature.toFixed(0) + '°C' : '-');
+	airTemp.html(json.AirTemperature > 0 ? json.AirTemperature.toFixed(0) + '°C' : '-');
+	trackTemp.html(json.TrackTemperature > 0 ? json.TrackTemperature.toFixed(0) + '°C' : '-');
 	
 	// DRS
 	var drsText = '-';
@@ -286,6 +305,11 @@ function update(json) {
 		delta.html('-');
 		delta.removeClass();
 	}
+	
+	deltaFront.html(json.TimeDeltaFront > 0 ? '-' + json.TimeDeltaFront.toFixed(3) : '-');
+	deltaFront.toggleClass('negative', json.TimeDeltaFront > 0);
+	deltaBehind.html(json.TimeDeltaBehind > 0 ? '+' + json.TimeDeltaBehind.toFixed(3) : '-');
+	deltaBehind.toggleClass('positive', json.TimeDeltaBehind > 0);
 	
 	// Flags.
 	var flagClass = '';
