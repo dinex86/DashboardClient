@@ -381,7 +381,7 @@ function update(json) {
 		timeInPitLane.html('-');
 	}
 	
-	pitLimiter.toggleClass('blink', json.PitLimiter == 1 && json.InPitLane == 0);
+	pitLimiter.toggleClass('fast-flash-bg', json.PitLimiter == 1 && json.InPitLane == 0);
 }
 
 function updateTireWear(id, wear, dirt) {
