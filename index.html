@@ -30,7 +30,19 @@
 				<div id="rpm_bar"></div>
 			</div>
 		</div>
-		<div id="first_screen" class="screen" style="display: none;"> 
+		
+		<div>
+			<div id="damage_overlay" style="display: none">
+				<div id="engine"></div>
+				<div id="gearbox"></div>
+				<div id="damage"></div>
+				<div class="bar"><div id="engine_bar"></div></div>
+				<div class="bar"><div id="gearbox_bar"></div></div>
+				<div class="bar"><div id="damage_bar"></div></div>
+			</div>
+		</div>
+		
+		<div id="first_screen" class="screen" style="display: ;"> 
 			<div class="box labelbox">
 				<span>fuel laps</span>
 				<div id="fuellaps"></div>
@@ -64,7 +76,7 @@
 				<div id="lap"></div>
 			</div>
 			<div class="box labelbox">
-				<span id="drs_p2p_label">DRS/P2P</span>
+				<span class="drs_p2p_label">DRS/P2P</span>
 				<div class="drs_p2p"></div>
 			</div>
 			<div class="box labelbox">
@@ -101,7 +113,7 @@
 				<div id="sessiontime"></div>
 			</div>
 		</div>
-		<div id="second_screen" class="screen" style="display: ;">
+		<div id="second_screen" class="screen" style="display: none;">
 			<div class="box labelbox">
 				<span>water</span>
 				<div class="water_temp"></div>
@@ -178,20 +190,20 @@
 				<div></div>
 			</div>
 			
-			<div class="speed_box box flag">
+			<div class="box speed_box flag">
 				<div class="speed"></div>
 			</div>
 		</div>
+		
 		<div id="pit_screen" class="screen" style="display: none;">
 			<div class="box labelbox gear_box">
 				<span>gear</span>
 				<div class="gear"></div>
 			</div>
-			<div class="box labelbox speed_box">
+			<div class="box labelbox speed_box flag">
 				<span>speed</span>
 				<div class="speed"></div>
 			</div>
-			
 			<div class="box labelbox">
 				<span>current fuel</span>
 				<div class="fuelleft"></div>
@@ -204,12 +216,13 @@
 				<span>time in pit lane</span>
 				<div id="time_in_pitlane"></div>
 			</div>
-			<div class="box pitlimiter"><div>PIT LIMITER</div></div>
+			<div class="box pitlimiter">
+				<div>PIT LIMITER</div>
+			</div>
 			<div class="box labelbox">
 				<span>laps to go</span>
 				<div id="laps_to_go"></div>
 			</div>
-			
 		</div>
 	</div>
 </body>

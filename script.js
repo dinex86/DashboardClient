@@ -261,10 +261,9 @@ function update(json) {
 	
 	// DRS & P2P
 	var drsP2pText = '-';
-	var drsP2pLabel = 'DRS/P2P';
-	var drsP2pStyle = '';
+	var drsP2pLabelText = 'DRS/P2P';
 	if (json.DrsEquipped == 1) {
-		drsP2pLabel = 'DRS';
+		drsP2pLabelText = 'DRS';
 		
 		if (json.DrsEngaged > 0) {
 			drsP2pText = 'DRS';
@@ -274,11 +273,12 @@ function update(json) {
 			drsP2pText = 'DRS';
 		}
 		
-		drs.toggleClass('drs_available', json.DrsAvailable == 1);
-		drs.toggleClass('blink', json.DrsEngaged == 1);
+		drsP2p.toggleClass('drs_available', json.DrsAvailable == 1);
+		drsP2p.toggleClass('blink', json.DrsEngaged == 1);
 	} else if (json.PushToPassEquipped == 1) {
-		drsP2pLabel = 'P2P';
+		drsP2pLabelText = 'P2P';
 		
+		var drsP2pStyle = '';
 		if (json.PushToPassEngaged > 0) {
 			drsP2pText = json.PushToPassEngagedTimeLeft.toFixed(1);
 			drsP2pStyle = 'p2p_engaged';
@@ -290,10 +290,13 @@ function update(json) {
 		} else {
 			drsP2pText = 'P2P';
 		}
+		
+		drsP2p.attr('class', drsP2pStyle);
 	}
 
-	drsP2p.html(drsP2p);
-	drsP2p.attr('class', drsP2pStyle);
+	drsP2pLabel.html(drsP2pLabelText);
+	drsP2p.html(drsP2pText);
+	
 	
 	// Times.
 	lapTime.html(formatLapTime(json.LapTimeCurrentSelf));
@@ -322,28 +325,14 @@ function update(json) {
 	positionBehind.html(json.TimeDeltaBehind > 0 ? (json.Position + 1) : '');
 	
 	// Flags.
-	var flagClass = '';
-	if (json.CurrentFlag == 0) {
-		flagClass = 'green';
-	} else if (json.CurrentFlag == 1) {
-		flagClass = 'yellow blink';
-	} else if (json.CurrentFlag == 2) {
-		flagClass = 'blue blink';
-	} else if (json.CurrentFlag == 3) {
-		flagClass = 'black';
-	} else if (json.CurrentFlag == 4) {
-		flagClass = 'black_white';
-	} else if (json.CurrentFlag == 5) {
-		flagClass = 'white blink';
-	} else if (json.CurrentFlag == 6) {
-		flagClass = 'checkered';
-	} else if (json.CurrentFlag == 7) {
-		flagClass = 'penalty blink';
-	}
-	
-	if (!flag.hasClass(flagClass)) {
-		flag.attr('class', flagClass);
-	}
+	flag.toggleClass('green', json.CurrentFlag == 0);
+	flag.toggleClass('yellow blink', json.CurrentFlag == 1);
+	flag.toggleClass('blue blink', json.CurrentFlag == 2);
+	flag.toggleClass('black', json.CurrentFlag == 3);
+	flag.toggleClass('black_white', json.CurrentFlag == 4);
+	flag.toggleClass('white blink', json.CurrentFlag == 5);
+	flag.toggleClass('checkered', json.CurrentFlag == 6);
+	flag.toggleClass('penalty blink', json.CurrentFlag == 7);
 	
 	// Tires.
 	tireTempFL.html(json.TireTempFrontLeft > -1 ? Math.floor(json.TireTempFrontLeft) + '°C' : 'N/A');
@@ -402,9 +391,9 @@ function updateTireWear(id, wear, dirt) {
 	
 	$('#' + id + ' div.wear').height((100.0 - (wear * 100.0)) + '%');
 	$('#' + id + ' div.dirt').css('top', (100.0 - (dirt * 100.0)) + '%');
-	$('#' + id).toggleClass('yellow', wear >= orangeUnder && wear < yellowUnder);
-	$('#' + id).toggleClass('orange', wear >= redUnder && wear < orangeUnder);
-	$('#' + id).toggleClass('red', wear < redUnder);
+	$('#' + id).toggleClass('state_yellow', wear >= orangeUnder && wear < yellowUnder);
+	$('#' + id).toggleClass('state_orange', wear >= redUnder && wear < orangeUnder);
+	$('#' + id).toggleClass('state_red', wear < redUnder);
 }
 
 function formatLapTime(sec) {
