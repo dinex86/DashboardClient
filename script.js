@@ -18,8 +18,8 @@ var sessionTime;
 var clock;
 var elGear;
 var elSpeed;
-var drs;
-var p2p;
+var drsP2p
+var drsP2pLabel;
 var timeInPitLane;
 var pitLimiter;
 var delta;
@@ -48,10 +48,18 @@ var airTemp;
 var trackTemp;
 var deltaFront;
 var deltaBehind;
+var positionFront;
+var positionBehind;
 
 $(document).ready(function () {
 	initElements();
-	window.onclick = function() { document.body.webkitRequestFullscreen(function() {}, function() {}); switchScreen(false); };
+	window.onclick = function() {
+		if (MAXRPM > 0) {
+			document.body.webkitRequestFullscreen(function() {}, function() {});
+		}
+		
+		switchScreen(false);
+	};
 	
 	wakeUpServer();
 	setInterval(function () { wakeUpServer(); }, 3000);
@@ -82,14 +90,18 @@ function initElements() {
 	clock = $('#clock');
 	
 	delta = $('#delta');
+	deltaFront = $('.delta_front');
+	deltaBehind = $('.delta_behind');
+	positionFront = $('.position_front');
+	positionBehind = $('.position_behind');
 	
-	drs = $('#drs');
-	p2p = $('#p2p');
+	drsP2p = $('.drs_p2p');
+	drsP2pLabel = $('.drs_p2p_label');
 	
 	timeInPitLane = $('#time_in_pitlane');
 	pitLimiter = $('.pitlimiter div');
 	
-	flag = $('#flag');
+	flag = $('.flag');
 	
 	tireTempFL = $('#tire_temp_front_left');
 	tireTempFR = $('#tire_temp_front_right');
@@ -110,9 +122,6 @@ function initElements() {
 	oilTemp = $('.oil_temp');
 	airTemp = $('.air_temp');
 	trackTemp = $('.track_temp');
-	
-	deltaFront = $('.delta_front');
-	deltaBehind = $('.delta_behind');
 	
 	// Init RPM bar.
 	rpmBar = $('#rpm_bar');
@@ -250,48 +259,47 @@ function update(json) {
 	airTemp.html(json.AirTemperature > 0 ? json.AirTemperature.toFixed(0) + '°C' : '-');
 	trackTemp.html(json.TrackTemperature > 0 ? json.TrackTemperature.toFixed(0) + '°C' : '-');
 	
-	// DRS
-	var drsText = '-';
+	// DRS & P2P
+	var drsP2pText = '-';
+	var drsP2pLabel = 'DRS/P2P';
+	var drsP2pStyle = '';
 	if (json.DrsEquipped == 1) {
+		drsP2pLabel = 'DRS';
+		
 		if (json.DrsEngaged > 0) {
-			drsText = 'DRS';
+			drsP2pText = 'DRS';
 		} else if (json.DrsNumActivationsLeft >= 0) {
-			drsText = json.DrsNumActivationsLeft > 1000 ? '&infin;' : json.DrsNumActivationsLeft;
+			drsP2pText = json.DrsNumActivationsLeft > 1000 ? '&infin;' : json.DrsNumActivationsLeft;
 		} else {
-			drsText = 'DRS';
+			drsP2pText = 'DRS';
 		}
 		
 		drs.toggleClass('drs_available', json.DrsAvailable == 1);
 		drs.toggleClass('blink', json.DrsEngaged == 1);
-	}
-
-	drs.html(drsText);
-	
-	//P2P
-	var p2pText = '-';
-	var p2pStyle = '';
-	if (json.PushToPassEquipped == 1) {
+	} else if (json.PushToPassEquipped == 1) {
+		drsP2pLabel = 'P2P';
+		
 		if (json.PushToPassEngaged > 0) {
-			p2pText = json.PushToPassEngagedTimeLeft.toFixed(1);
-			p2pStyle = 'p2p_engaged';
+			drsP2pText = json.PushToPassEngagedTimeLeft.toFixed(1);
+			drsP2pStyle = 'p2p_engaged';
 		} else if (json.PushToPassWaitTimeLeft > 0) {
-			p2pText = json.PushToPassWaitTimeLeft.toFixed(0);
-			p2pStyle = 'p2p_cooldown';
+			drsP2pText = json.PushToPassWaitTimeLeft.toFixed(0);
+			drsP2pStyle = 'p2p_cooldown';
 		} else if (json.PushToPassAvailable > 0) {
-			p2pText = json.PushToPassNumActivationsLeft > 1000 ? '&infin;' : json.PushToPassNumActivationsLeft;
+			drsP2pText = json.PushToPassNumActivationsLeft > 1000 ? '&infin;' : json.PushToPassNumActivationsLeft;
 		} else {
-			p2pText = 'P2P';
+			drsP2pText = 'P2P';
 		}
 	}
 
-	p2p.html(p2pText);
-	p2p.attr('class', p2pStyle);
+	drsP2p.html(drsP2p);
+	drsP2p.attr('class', drsP2pStyle);
 	
 	// Times.
 	lapTime.html(formatLapTime(json.LapTimeCurrentSelf));
 	lastLap.html(formatLapTime(json.LapTimePreviousSelf));
 	bestLap.html(formatLapTime(json.LapTimeBestSelf));
-	sessionTime.html(json.SessionTimeRemaining > 0 ? formatTime(json.SessionTimeRemaining) : getSessionName(json.Session));
+	sessionTime.html(json.SessionTimeRemaining > 0 ? formatTime(json.SessionTimeRemaining) : getSessionName(json));
 	clock.html(moment().local().format("HH:mm:ss"));
 	
 	//Delta
@@ -307,9 +315,11 @@ function update(json) {
 	}
 	
 	deltaFront.html(json.TimeDeltaFront > 0 ? '-' + json.TimeDeltaFront.toFixed(3) : '-');
-	deltaFront.toggleClass('negative', json.TimeDeltaFront > 0);
+	deltaFront.toggleClass('positive', json.TimeDeltaFront > 0);
 	deltaBehind.html(json.TimeDeltaBehind > 0 ? '+' + json.TimeDeltaBehind.toFixed(3) : '-');
-	deltaBehind.toggleClass('positive', json.TimeDeltaBehind > 0);
+	deltaBehind.toggleClass('negative', json.TimeDeltaBehind > 0);
+	positionFront.html(json.TimeDeltaFront > 0 ? (json.Position - 1) : '');
+	positionBehind.html(json.TimeDeltaBehind > 0 ? (json.Position + 1) : '');
 	
 	// Flags.
 	var flagClass = '';
@@ -405,13 +415,22 @@ function formatTime(sec) {
 	return sec < 0 ? '-' : moment.utc(sec * 1000).format("HH:mm:ss");
 }
 
-function getSessionName(index, iteration) {
+function getSessionName(json) {
+	
+	var format = json.RaceFormat;
+	var index = json.Session;
+	var iteration = json.SessionIteration;
+	
 	var iterationText = iteration > 0 ? ' #' + iteration : '';
 	if (index == 0) {
 		return 'Practice' + iterationText;
 	} else if (index == 1) {
 		return 'Qualifying' + iterationText;
 	} else if (index == 2) {
+		if ((format == 2 || format == 0) && json.SessionTimeRemaining <= 0) {
+			return 'Last Lap';
+		}
+		
 		return 'Race' + iterationText;
 	}
 	

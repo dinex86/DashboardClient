@@ -30,7 +30,7 @@
 				<div id="rpm_bar"></div>
 			</div>
 		</div>
-		<div id="first_screen" class="screen">
+		<div id="first_screen" class="screen" style="display: none;"> 
 			<div class="box labelbox">
 				<span>fuel laps</span>
 				<div id="fuellaps"></div>
@@ -56,16 +56,16 @@
 				<div id="delta"></div>
 			</div>
 			<div class="box labelbox">
-				<span>drs</span>
-				<div id="drs"></div>
+				<span>pos.</span>
+				<div id="pos"></div>
 			</div>
 			<div class="box labelbox">
-				<span>p2p</span>
-				<div id="p2p"></div>
+				<span>lap</span>
+				<div id="lap"></div>
 			</div>
 			<div class="box labelbox">
-				<span>flag</span>
-				<div id="flag"></div>
+				<span id="drs_p2p_label">DRS/P2P</span>
+				<div class="drs_p2p"></div>
 			</div>
 			<div class="box labelbox">
 				<span>best time</span>
@@ -75,18 +75,21 @@
 				<span>last lap</span>
 				<div id="lastlap"></div>
 			</div>
-			<div class="box labelbox">
-				<span>pos.</span>
-				<div id="pos"></div>
+			<div class="box labelbox deltabox">
+				<span>delta front</span>
+				<div>
+					<span class="position_front"></span>
+					<span class="delta_front"></span>
+				</div>
 			</div>
-			<div class="box labelbox">
-				<span>lap</span>
-				<div id="lap"></div>
+			<div class="box labelbox deltabox">
+				<span>delta behind</span>
+				<div>
+					<span class="position_behind"></span>
+					<span class="delta_behind"></span>
+				</div>
 			</div>
-			<div class="box labelbox">
-				<div></div>
-			</div>
-			<div class="speed_box box">
+			<div class="speed_box box flag">
 				<div class="speed"></div>
 			</div>
 			<div class="box labelbox">
@@ -98,7 +101,7 @@
 				<div id="sessiontime"></div>
 			</div>
 		</div>
-		<div id="second_screen" class="screen" style="display: none;">
+		<div id="second_screen" class="screen" style="display: ;">
 			<div class="box labelbox">
 				<span>water</span>
 				<div class="water_temp"></div>
@@ -162,16 +165,20 @@
 				</div>
 			</div>
 			
-			<div class="box labelbox deltabox">
-				<span>delta front</span>
-				<div class="delta_front"></div>
+			<div class="box labelbox">
+				<span></span>
+				<div></div>
 			</div>
-			<div class="box labelbox deltabox">
-				<span>delta behind</span>
-				<div class="delta_behind"></div>
+			<div class="box labelbox">
+				<span></span>
+				<div></div>
+			</div>
+			<div class="box labelbox">
+				<span></span>
+				<div></div>
 			</div>
 			
-			<div class="speed_box box">
+			<div class="speed_box box flag">
 				<div class="speed"></div>
 			</div>
 		</div>

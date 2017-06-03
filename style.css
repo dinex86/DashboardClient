@@ -143,7 +143,7 @@ div.labelbox>div {
 .screen {
 	display: grid;
 	grid-gap: 15px 7px;
-	grid-template-columns: 2fr 2fr 2fr 150px 3fr 3fr;
+	grid-template-columns: 2fr 2fr 2fr 2fr 2fr 2fr 75px 75px 3fr 3fr 3fr 3fr;
 	height: 270px;
 }
 
@@ -152,10 +152,13 @@ div.labelbox>div {
 }
 
 #second_screen {
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 150px 3fr 3fr;
 	grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr; 
 }
-	
+
+#first_screen .box {
+	grid-column: auto / span 2;
+}
+
 #first_screen .gear_box {
 	grid-row: auto / span 2;
 }
@@ -163,6 +166,7 @@ div.labelbox>div {
 .speed_box>div {
 	font-size: 50pt;
 	line-height: 55pt;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 #rpm_box {
@@ -173,11 +177,11 @@ div.labelbox>div {
 	border: 2px solid white;
 }
 		
-#delta.positive {
+.positive {
 	color: #ff1919;
 }
 
-#delta.negative {
+.negative {
 	color: lime;
 }
 
@@ -197,54 +201,41 @@ div.labelbox>div {
 	color: #ff1919;
 }
 
-#flag {
-	margin: 0 auto;
-	width: 60%;
-	height: 30pt;
-	border: 1px solid black;
-	opacity: 1;
+.flag.blink {
+	animation-name: flash-bg;
+	animation-timing-function: steps(1);
 }
 
-#flag.green {
-	opacity: 0;
-	border-color: lime;
-	background-color: lime;
-	
-	animation: fadeOutWithDelay 10s;
+.flag.green {
+	background-color: transparent;
+	animation: greenFlagWithFade 10s;
 }
 
-#flag.yellow {
-	border-color: yellow;
+.flag.yellow {
 	background-color: yellow;
 }
 
-#flag.blue {
-	border-color: blue;
+.flag.blue {
 	background-color: blue;
 }
 
-#flag.penalty {
-	border-color: orange;
+.flag.penalty {
 	background-color: orange;
 }
 
-#flag.white {
-	border-color: white;
+.flag.white {
 	background-color: white;
 }
 
-#flag.black_white {
-	border-color: white;
+.flag.black_white {
 	background: linear-gradient(to left top, #FFF 0%, #FFF 49%, #000 51%, #000 100%);
 }
 
-#flag.black {
-	border-color: white;
+.flag.black {
 	background-color: black;
 }
 
-#flag.checkered {
-	border-color: white;
+.flag.checkered {
 	background: linear-gradient(45deg, #000 25%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 75%, #000 75%, #000 0), linear-gradient(45deg, #000 25%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 75%, #000 75%, #000 0), rgb(255, 255, 255);
 	background-position: 0 0, 10px 10px;
 	background-size: 20px 20px;
@@ -262,6 +253,10 @@ div.labelbox>div {
 	color: yellow;
 }
 
+.position_front, .position_behind {
+	padding-right: 5px;
+}
+
 /* Second screen. */
 
 #second_screen .box {
@@ -271,25 +266,25 @@ div.labelbox>div {
 
 #second_screen .gear_box {
 	grid-row: auto / span 4;
-	grid-column: auto / span 1;
+	grid-column: auto / span 2;
 }
 
 #second_screen .speed_box {
 	grid-row: auto / span 2;
-	grid-column: auto / span 1;
+	grid-column: auto / span 2;
 }
 
 #second_screen #tire_conditions {
-	grid-column: auto / span 2;
+	grid-column: auto / span 4;
 	grid-row: auto / span 3;
 }
 
 #second_screen #tire_temps, #second_screen #tire_pressures {
-	grid-column: auto / span 1;
+	grid-column: auto / span 2;
 	grid-row: auto / span 3;
 }
 
-#second_screen .deltabox {
+#first_screen .deltabox {
 	grid-column: auto / span 3;
 }
 
@@ -415,6 +410,15 @@ div.tire div.dirt {
 	50% { background-color: transparent; }
 }
 
+@keyframes flash-bg {
+	61% {
+		background-color: transparent;;
+	}
+	100% {
+		background-color: transparent;;
+	}
+}
+
 @keyframes flash {
 	0% {
 		opacity: 1;
@@ -430,14 +434,14 @@ div.tire div.dirt {
 	}
 }
 
-@keyframes fadeOutWithDelay {
+@keyframes greenFlagWithFade {
 	0% {
-		opacity: 1;
+	   background-color: lime;
 	}
 	90% {
-	   opacity: 1;
+	   background-color: lime;
 	}
 	100% {
-	   opacity: 0;
+	   background-color: transparent;
 	}
 }
