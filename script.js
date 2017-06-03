@@ -184,14 +184,19 @@ function startClient() {
 	}
 	
 	ws.onmessage = function(message) {
-		var json = JSON.parse(message.data);
-	
-		if (tmp == false) {
-			tmp = true;
-			console.info(json);
-		}
+		try {
+			var json = JSON.parse(message.data);
 		
-		update(json);
+			if (tmp == false) {
+				tmp = true;
+				console.info(json);
+			}
+			
+			update(json);
+		} catch(e) {
+			console.info(message.data);
+			ws.close();
+		}
 	};
 }
 
@@ -297,7 +302,6 @@ function update(json) {
 	drsP2pLabel.html(drsP2pLabelText);
 	drsP2p.html(drsP2pText);
 	
-	
 	// Times.
 	lapTime.html(formatLapTime(json.LapTimeCurrentSelf));
 	lastLap.html(formatLapTime(json.LapTimePreviousSelf));
@@ -382,6 +386,13 @@ function update(json) {
 	}
 	
 	pitLimiter.toggleClass('fast-flash-bg', json.PitLimiter == 1 && json.InPitLane == 0);
+	
+	
+	// 57 = Xbox R3 (right stick)
+	if (json.PressedButtons.length > 0 && json.PressedButtons.indexOf('57') != -1) {
+		console.info(json.PressedButtons);
+		switchScreen();
+	}
 }
 
 function updateTireWear(id, wear, dirt) {
