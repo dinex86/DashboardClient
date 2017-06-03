@@ -30,179 +30,189 @@
 				<div id="rpm_bar"></div>
 			</div>
 		</div>
-		<div id="first_screen" class="screen">
-			<div class="box labelbox">
-				<span>fuel laps</span>
-				<div id="fuellaps"></div>
+		<div>
+			<div id="damage_overlay" style="display: none">
+				<div id="engine"></div>
+				<div id="gearbox"></div>
+				<div id="damage"></div>
+				<div class="bar"><div id="engine_bar"></div></div>
+				<div class="bar"><div id="gearbox_bar"></div></div>
+				<div class="bar"><div id="damage_bar"></div></div>
 			</div>
-			<div class="box labelbox">
-				<span>fuel left</span>
-				<div class="fuelleft"></div>
-			</div>
-			<div class="box labelbox">
-				<span>fuel/lap</span>
-				<div id="avgfuel"></div>
-			</div>
-			<div class="box labelbox gear_box">
-				<span>gear</span>
-				<div class="gear"></div>
-			</div>
-			<div class="box labelbox">
-				<span>lap time</span>
-				<div id="laptime"></div>
-			</div>
-			<div class="box labelbox">
-				<span>delta</span>
-				<div id="delta"></div>
-			</div>
-			<div class="box labelbox">
-				<span>drs</span>
-				<div id="drs"></div>
-			</div>
-			<div class="box labelbox">
-				<span>p2p</span>
-				<div id="p2p"></div>
-			</div>
-			<div class="box labelbox">
-				<span>flag</span>
-				<div id="flag"></div>
-			</div>
-			<div class="box labelbox">
-				<span>best time</span>
-				<div id="bestlap"></div>
-			</div>
-			<div class="box labelbox">
-				<span>last lap</span>
-				<div id="lastlap"></div>
-			</div>
-			<div class="box labelbox">
-				<span>pos.</span>
-				<div id="pos"></div>
-			</div>
-			<div class="box labelbox">
-				<span>lap</span>
-				<div id="lap"></div>
-			</div>
-			<div class="box labelbox">
-				<div></div>
-			</div>
-			<div class="speed_box box">
-				<div class="speed"></div>
-			</div>
-			<div class="box labelbox">
-				<span>clock</span>
-				<div id="clock"></div>
-			</div>
-			<div class="box labelbox">
-				<span>session</span>
-				<div id="sessiontime"></div>
-			</div>
-		</div>
-		<div id="second_screen" class="screen" style="display: none;">
-			<div class="box labelbox">
-				<span>water</span>
-				<div class="water_temp"></div>
-			</div>
-			<div class="box labelbox">
-				<span>oil</span>
-				<div class="oil_temp"></div>
-			</div>
-			<div class="box labelbox">
-				<span>air</span>
-				<div class="air_temp"></div>
-			</div>
-			<div class="box labelbox gear_box">
-				<span>gear</span>
-				<div class="gear"></div>
-			</div>
-			<div class="box labelbox" id="tire_conditions">
-				<span>tire conditions</span>
-				<div>
-					<div id="tire_wear_front_left" class="tire_left"> </div>
-					<div class="tire" id="tire_front_left"><div class="wear"></div><div class="dirt"></div></div>
-					<div class="tire" id="tire_front_right"><div class="wear"></div><div class="dirt"></div></div>
-					<div id="tire_wear_front_right" class="tire_right"> </div>
-					
-					<div id="tire_wear_rear_left" class="tire_left"> </div>
-					<div class="tire" id="tire_rear_left"><div class="wear"></div><div class="dirt"></div></div>
-					<div class="tire" id="tire_rear_right"><div class="wear"></div><div class="dirt"></div></div>
-					<div id="tire_wear_rear_right" class="tire_right"> </div>
+			<div id="first_screen" class="screen">
+				<div class="box labelbox">
+					<span>fuel laps</span>
+					<div id="fuellaps"></div>
+				</div>
+				<div class="box labelbox">
+					<span>fuel left</span>
+					<div class="fuelleft"></div>
+				</div>
+				<div class="box labelbox">
+					<span>fuel/lap</span>
+					<div id="avgfuel"></div>
+				</div>
+				<div class="box labelbox gear_box">
+					<span>gear</span>
+					<div class="gear"></div>
+				</div>
+				<div class="box labelbox">
+					<span>lap time</span>
+					<div id="laptime"></div>
+				</div>
+				<div class="box labelbox">
+					<span>delta</span>
+					<div id="delta"></div>
+				</div>
+				<div class="box labelbox">
+					<span>drs</span>
+					<div id="drs"></div>
+				</div>
+				<div class="box labelbox">
+					<span>p2p</span>
+					<div id="p2p"></div>
+				</div>
+				<div class="box labelbox">
+					<span>flag</span>
+					<div id="flag"></div>
+				</div>
+				<div class="box labelbox">
+					<span>best time</span>
+					<div id="bestlap"></div>
+				</div>
+				<div class="box labelbox">
+					<span>last lap</span>
+					<div id="lastlap"></div>
+				</div>
+				<div class="box labelbox">
+					<span>pos.</span>
+					<div id="pos"></div>
+				</div>
+				<div class="box labelbox">
+					<span>lap</span>
+					<div id="lap"></div>
+				</div>
+				<div class="box labelbox">
+					<div></div>
+				</div>
+				<div class="speed_box box">
+					<div class="speed"></div>
+				</div>
+				<div class="box labelbox">
+					<span>clock</span>
+					<div id="clock"></div>
+				</div>
+				<div class="box labelbox">
+					<span>session</span>
+					<div id="sessiontime"></div>
 				</div>
 			</div>
-			
-			<div class="box labelbox">
-				<span>track</span>
-				<div class="track_temp"></div>
-			</div>
-			<div class="box labelbox">
-				<span></span>
-				<div></div>
-			</div>
-			<div class="box labelbox">
-				<span></span>
-				<div></div>
-			</div>
-			
-			<div class="box labelbox" id="tire_temps">
-				<span>tire temps</span>
-				<div>
-					<div id="tire_temp_front_left" class="tire_left"> </div>
-					<div id="tire_temp_front_right" class="tire_right"> </div>
-					<div id="tire_temp_rear_left" class="tire_left"> </div>
-					<div id="tire_temp_rear_right" class="tire_right"> </div>
+			<div id="second_screen" class="screen" style="display: none;">
+				<div class="box labelbox">
+					<span>water</span>
+					<div class="water_temp"></div>
+				</div>
+				<div class="box labelbox">
+					<span>oil</span>
+					<div class="oil_temp"></div>
+				</div>
+				<div class="box labelbox">
+					<span>air</span>
+					<div class="air_temp"></div>
+				</div>
+				<div class="box labelbox gear_box">
+					<span>gear</span>
+					<div class="gear"></div>
+				</div>
+				<div class="box labelbox" id="tire_conditions">
+					<span>tire conditions</span>
+					<div>
+						<div id="tire_wear_front_left" class="tire_left"> </div>
+						<div class="tire" id="tire_front_left"><div class="wear"></div><div class="dirt"></div></div>
+						<div class="tire" id="tire_front_right"><div class="wear"></div><div class="dirt"></div></div>
+						<div id="tire_wear_front_right" class="tire_right"> </div>
+						
+						<div id="tire_wear_rear_left" class="tire_left"> </div>
+						<div class="tire" id="tire_rear_left"><div class="wear"></div><div class="dirt"></div></div>
+						<div class="tire" id="tire_rear_right"><div class="wear"></div><div class="dirt"></div></div>
+						<div id="tire_wear_rear_right" class="tire_right"> </div>
+					</div>
+				</div>
+				
+				<div class="box labelbox">
+					<span>track</span>
+					<div class="track_temp"></div>
+				</div>
+				<div class="box labelbox">
+					<span></span>
+					<div></div>
+				</div>
+				<div class="box labelbox">
+					<span></span>
+					<div></div>
+				</div>
+				
+				<div class="box labelbox" id="tire_temps">
+					<span>tire temps</span>
+					<div>
+						<div id="tire_temp_front_left" class="tire_left"> </div>
+						<div id="tire_temp_front_right" class="tire_right"> </div>
+						<div id="tire_temp_rear_left" class="tire_left"> </div>
+						<div id="tire_temp_rear_right" class="tire_right"> </div>
+					</div>
+				</div>
+				<div class="box labelbox" id="tire_pressures">
+					<span>tire pressures</span>
+					<div>
+						<div id="tire_pressure_front_left" class="tire_left"> </div>
+						<div id="tire_pressure_front_right" class="tire_right"> </div>
+						<div id="tire_pressure_rear_left" class="tire_left"> </div>
+						<div id="tire_pressure_rear_right" class="tire_right"> </div>
+					</div>
+				</div>
+				
+				<div class="box labelbox deltabox">
+					<span>delta front</span>
+					<div class="delta_front"></div>
+				</div>
+				<div class="box labelbox deltabox">
+					<span>delta behind</span>
+					<div class="delta_behind"></div>
+				</div>
+				
+				<div class="speed_box box">
+					<div class="speed"></div>
 				</div>
 			</div>
-			<div class="box labelbox" id="tire_pressures">
-				<span>tire pressures</span>
-				<div>
-					<div id="tire_pressure_front_left" class="tire_left"> </div>
-					<div id="tire_pressure_front_right" class="tire_right"> </div>
-					<div id="tire_pressure_rear_left" class="tire_left"> </div>
-					<div id="tire_pressure_rear_right" class="tire_right"> </div>
+			<div id="pit_screen" class="screen" style="display: none;">
+				<div class="box labelbox gear_box">
+					<span>gear</span>
+					<div class="gear"></div>
 				</div>
+				<div class="box labelbox speed_box">
+					<span>speed</span>
+					<div class="speed"></div>
+				</div>
+				
+				<div class="box labelbox">
+					<span>current fuel</span>
+					<div class="fuelleft"></div>
+				</div>
+				<div class="box labelbox">
+					<span>fuel required until finish</span>
+					<div id="fuel_required"></div>
+				</div>
+				<div class="box labelbox">
+					<span>time in pit lane</span>
+					<div id="time_in_pitlane"></div>
+				</div>
+				<div class="box pitlimiter"><div>PIT LIMITER</div></div>
+				<div class="box labelbox">
+					<span>laps to go</span>
+					<div id="laps_to_go"></div>
+				</div>
+				
 			</div>
-			
-			<div class="box labelbox deltabox">
-				<span>delta front</span>
-				<div class="delta_front"></div>
-			</div>
-			<div class="box labelbox deltabox">
-				<span>delta behind</span>
-				<div class="delta_behind"></div>
-			</div>
-			
-			<div class="speed_box box">
-				<div class="speed"></div>
-			</div>
-		</div>
-		<div id="pit_screen" class="screen" style="display: none;">
-			<div class="box labelbox gear_box">
-				<span>gear</span>
-				<div class="gear"></div>
-			</div>
-			<div class="box labelbox speed_box">
-				<span>speed</span>
-				<div class="speed"></div>
-			</div>
-			
-			<div class="box labelbox">
-				<span>current fuel</span>
-				<div class="fuelleft"></div>
-			</div>
-			<div class="box labelbox">
-				<span>fuel required until finish</span>
-				<div id="fuel_required"></div>
-			</div>
-			<div class="box labelbox">
-				<span>time in pit lane</span>
-				<div id="time_in_pitlane"></div>
-			</div>
-			<div class="box pitlimiter"><div>PIT LIMITER</div></div>
-			<div class="box labelbox">
-				<span>laps to go</span>
-				<div id="laps_to_go"></div>
-			</div>
-			
 		</div>
 	</div>
 </body>

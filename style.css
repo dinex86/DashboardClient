@@ -140,6 +140,67 @@ div.labelbox>div {
 	line-height: 75%;
 }
 
+/* Damage overlay */
+
+#damage_overlay {
+position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    line-height: 200px;
+    height: 200px;
+    margin-left: -300px;
+    margin-top: -100px;
+    background-color: rgba(0,0,0,0.95);
+	border: 2px solid red;
+    text-align: center;
+  
+    /* needed styles for the overlay */
+    z-index: 10; /* keep on top of other elements on the page */
+    outline: 9999px solid rgba(0,0,0,0.7);
+	
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 1fr auto;
+}
+
+#damage_overlay #engine, #damage_overlay #gearbox, #damage_overlay #damage {
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	background-color: white;
+	margin: 5px;
+}
+
+#damage_overlay .bar {
+	background-color: #FFF;
+	border: 2px solid #000;
+	height: 20px;
+	margin: 10px 20px;
+	margin-top: 5px;
+	outline: 1px solid #FFF;
+}
+
+.bar>div {
+	position: relative;
+	right: 0;
+	width: 0%;
+	background-color: #000;
+}
+
+#damage_overlay #engine {
+	-webkit-mask-image: url('./img/engine.svg');
+}
+
+#damage_overlay #gearbox {
+	-webkit-mask-image: url('./img/gearbox.svg');
+}
+
+#damage_overlay #damage {
+	-webkit-mask-image: url('./img/damage.svg');
+}
+
+/* Screens */
+
 .screen {
 	display: grid;
 	grid-gap: 15px 7px;
@@ -156,6 +217,8 @@ div.labelbox>div {
 	grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr; 
 }
 	
+/* First screen. */
+
 #first_screen .gear_box {
 	grid-row: auto / span 2;
 }
@@ -331,23 +394,23 @@ div.tire {
 	background-clip: content-box;
 }
 
-div.tire.orange, div.tire.red {
+.state_orange, .state_red {
 	animation-name: blinker-bg;
 	animation-iteration-count: infinite;
 	animation-timing-function: ease-in-out;
 }
 
-div.tire.yellow  {
-	background-color: yellow;
+.state_yellow  {
+	background-color: yellow !important;
 }
 
-div.tire.orange  {
-	background-color: orange;
+.state_orange  {
+	background-color: orange !important;
 	animation-duration: 1.5s;
 }
 
-div.tire.red  {
-	background-color: red;
+.state_red  {
+	background-color: red !important;
 	animation-duration: .75s;
 }
 

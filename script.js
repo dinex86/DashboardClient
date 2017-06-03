@@ -392,9 +392,9 @@ function updateTireWear(id, wear, dirt) {
 	
 	$('#' + id + ' div.wear').height((100.0 - (wear * 100.0)) + '%');
 	$('#' + id + ' div.dirt').css('top', (100.0 - (dirt * 100.0)) + '%');
-	$('#' + id).toggleClass('yellow', wear >= orangeUnder && wear < yellowUnder);
-	$('#' + id).toggleClass('orange', wear >= redUnder && wear < orangeUnder);
-	$('#' + id).toggleClass('red', wear < redUnder);
+	$('#' + id).toggleClass('state_yellow', wear >= orangeUnder && wear < yellowUnder);
+	$('#' + id).toggleClass('state_orange', wear >= redUnder && wear < orangeUnder);
+	$('#' + id).toggleClass('state_red', wear < redUnder);
 }
 
 function formatLapTime(sec) {
