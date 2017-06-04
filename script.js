@@ -50,6 +50,7 @@ var deltaFront;
 var deltaBehind;
 var positionFront;
 var positionBehind;
+var breakBias;
 
 $(document).ready(function () {
 	initElements();
@@ -122,6 +123,8 @@ function initElements() {
 	oilTemp = $('.oil_temp');
 	airTemp = $('.air_temp');
 	trackTemp = $('.track_temp');
+	
+	breakBias = $('.break_bias');
 	
 	// Init RPM bar.
 	rpmBar = $('#rpm_bar');
@@ -247,9 +250,9 @@ function update(json) {
 	elSpeed.toggleClass('speed_drs_active', json.DrsEngaged > 0);
 	
 	// Fuel.
-	fuelLaps.html(json.FuelLapsLeftEstimate > 0 ? (Math.floor(json.FuelLapsLeftEstimate * 10) / 10).toFixed(1) : "-");
-	fuelLeft.html((Math.floor(json.FuelLeft * 10) / 10).toFixed(1));
-	avgFuel.html(json.FuelPerLap > 0 ? (Math.ceil(json.FuelPerLap * 10) / 10).toFixed(1) : "-");
+	fuelLaps.html(json.FuelLapsLeftEstimate > 0 ? (Math.floor(json.FuelLapsLeftEstimate * 10) / 10).toFixed(1) : '-');
+	fuelLeft.html(json.FuelLeft >= 0 ? (Math.floor(json.FuelLeft * 10) / 10).toFixed(1) : '-');
+	avgFuel.html(json.FuelPerLap > 0 ? (Math.ceil(json.FuelPerLap * 10) / 10).toFixed(1) : '-');
 	
 	fuelLaps.toggleClass('fuel_left_2_laps', json.FuelLapsLeftEstimate >= 0 && json.FuelLapsLeftEstimate <= 2);
 	fuelLaps.toggleClass('fuel_left_3_laps', json.FuelLapsLeftEstimate > 2 && json.FuelLapsLeftEstimate <= 3);
@@ -257,6 +260,8 @@ function update(json) {
 	
 	lap.html((json.NumberOfLaps > 0 && json.CompletedLaps >= json.NumberOfLaps ? json.NumberOfLaps : json.CompletedLaps + 1) + (json.NumberOfLaps > 0 ? "/" + json.NumberOfLaps : ""));
 	pos.html(json.Position + "/" + json.NumCars);
+	
+	breakBias.html(json.BreakBias >= 0 ? (json.BreakBias * 100.0).toFixed(0) + '%' : '-');
 	
 	// Temps.
 	waterTemp.html(json.WaterTemperature > 0 ? json.WaterTemperature.toFixed(0) + '°C' : '-');
@@ -321,9 +326,9 @@ function update(json) {
 		delta.removeClass();
 	}
 	
-	deltaFront.html(json.TimeDeltaFront > 0 ? '-' + json.TimeDeltaFront.toFixed(3) : '-');
+	deltaFront.html(json.TimeDeltaFront > 0 ? json.TimeDeltaFront.toFixed(3) : '-');
 	deltaFront.toggleClass('positive', json.TimeDeltaFront > 0);
-	deltaBehind.html(json.TimeDeltaBehind > 0 ? '+' + json.TimeDeltaBehind.toFixed(3) : '-');
+	deltaBehind.html(json.TimeDeltaBehind > 0 ? json.TimeDeltaBehind.toFixed(3) : '-');
 	deltaBehind.toggleClass('negative', json.TimeDeltaBehind > 0);
 	positionFront.html(json.TimeDeltaFront > 0 ? (json.Position - 1) : '');
 	positionBehind.html(json.TimeDeltaBehind > 0 ? (json.Position + 1) : '');
@@ -387,11 +392,13 @@ function update(json) {
 	
 	pitLimiter.toggleClass('fast-flash-bg', json.PitLimiter == 1 && json.InPitLane == 0);
 	
-	
 	// 57 = Xbox R3 (right stick)
-	if (json.PressedButtons.length > 0 && json.PressedButtons.indexOf('57') != -1) {
+	// 60 = T300 PS button.
+	if (json.PressedButtons.length > 0) {
 		console.info(json.PressedButtons);
-		switchScreen();
+		if (json.PressedButtons.indexOf('60') != -1) {
+			switchScreen();
+		}
 	}
 }
 
