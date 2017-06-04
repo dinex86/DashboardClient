@@ -390,7 +390,7 @@ function update(json) {
 		timeInPitLane.html('-');
 	}
 	
-	pitLimiter.toggleClass('fast-flash-bg', (json.PitLimiter == 1 && json.InPitLane == 0) || (json.PitLimiter == 0 && json.InPitLane == 1));
+	pitLimiter.toggleClass('fast-flash-bg', json.PitLimiter != json.InPitLane);
 	
 	// 57 = Xbox R3 (right stick)
 	// 60 = T300 PS button.
