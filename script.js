@@ -51,6 +51,8 @@ var deltaBehind;
 var positionFront;
 var positionBehind;
 var breakBias;
+var tc;
+var abs;
 
 $(document).ready(function () {
 	initElements();
@@ -125,6 +127,8 @@ function initElements() {
 	trackTemp = $('.track_temp');
 	
 	breakBias = $('.break_bias');
+	tc = $('.tc');
+	abs = $('.abs');
 	
 	// Init RPM bar.
 	rpmBar = $('#rpm_bar');
@@ -359,13 +363,15 @@ function update(json) {
 	tirePressureRL.html(json.TirePressureRearLeft > -1 ? Math.floor(json.TirePressureRearLeft) + 'psi' : 'N/A');
 	tirePressureRR.html(json.TirePressureRearRight > -1 ? Math.floor(json.TirePressureRearRight) + 'psi' : 'N/A');
 	
-	updateTireWear('tire_front_left', json.TireWearFrontLeft, json.TireDirtFrontLeft);
-	updateTireWear('tire_front_right', json.TireWearFrontRight, json.TireDirtFrontRight);
-	updateTireWear('tire_rear_left', json.TireWearRearLeft, json.TireDirtRearLeft);
-	updateTireWear('tire_rear_right', json.TireWearRearRight, json.TireDirtRearRight);
+	updateTireWear('tire_front_left', json.TireWearFrontLeft, json.TireDirtFrontLeft, json.TirePressureFrontLeft);
+	updateTireWear('tire_front_right', json.TireWearFrontRight, json.TireDirtFrontRight, json.TirePressureFrontRight);
+	updateTireWear('tire_rear_left', json.TireWearRearLeft, json.TireDirtRearLeft, json.TirePressureRearLeft);
+	updateTireWear('tire_rear_right', json.TireWearRearRight, json.TireDirtRearRight, json.TirePressureRearRight);
 	
 	// Pit screen.
 	pitLimiter.toggleClass('active', json.PitLimiter > 0);
+	pitLimiter.toggleClass('fast-flash-bg', json.PitLimiter == 1 && json.InPitLane == 0);
+	
 	if (json.PitLimiter == 1 || json.InPitLane == 1 || json.LastTimeInPit + 5000 > json.LastTimeOnTrack) {
 		if (!pitScreen.is(':visible')) {
 			switchScreen(true);
@@ -390,7 +396,8 @@ function update(json) {
 		timeInPitLane.html('-');
 	}
 	
-	pitLimiter.toggleClass('fast-flash-bg', json.PitLimiter == 1 && json.InPitLane == 0);
+	tc.html(json.TractionControl >= 0 ? (json.TractionControl * 100).toFixed(0) + '%' : '-');
+	abs.html(json.Abs >= 0 ? (json.Abs * 100).toFixed(0) + '%' : '-');
 	
 	// 57 = Xbox R3 (right stick)
 	// 60 = T300 PS button.
@@ -402,16 +409,16 @@ function update(json) {
 	}
 }
 
-function updateTireWear(id, wear, dirt) {
+function updateTireWear(id, wear, dirt, pressure) {
 	var yellowUnder = 0.7;
 	var orangeUnder = 0.45;
 	var redUnder = 0.25;
 	
-	$('#' + id + ' div.wear').height((100.0 - (wear * 100.0)) + '%');
+	$('#' + id + ' div.wear').height((pressure == 0 ? 100 : (100.0 - (wear * 100.0))) + '%');
 	$('#' + id + ' div.dirt').css('top', (100.0 - (dirt * 100.0)) + '%');
-	$('#' + id).toggleClass('state_yellow', wear >= orangeUnder && wear < yellowUnder);
-	$('#' + id).toggleClass('state_orange', wear >= redUnder && wear < orangeUnder);
-	$('#' + id).toggleClass('state_red', wear < redUnder);
+	$('#' + id).toggleClass('state_yellow', pressure != 0 && wear >= orangeUnder && wear < yellowUnder);
+	$('#' + id).toggleClass('state_orange', pressure != 0 && wear >= redUnder && wear < orangeUnder);
+	$('#' + id).toggleClass('state_red', pressure == 0 || wear < redUnder);
 }
 
 function formatLapTime(sec) {
