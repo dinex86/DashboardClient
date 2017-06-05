@@ -370,7 +370,7 @@ function update(json) {
 	
 	// Pit screen.
 	pitLimiter.toggleClass('active', json.PitLimiter > 0);
-	pitLimiter.toggleClass('fast-flash-bg', json.PitLimiter == 1 && json.InPitLane == 0);
+	pitLimiter.toggleClass('fast-flash-bg', json.PitLimiter != json.InPitLane);
 	
 	if (json.PitLimiter == 1 || json.InPitLane == 1 || json.LastTimeInPit + 5000 > json.LastTimeOnTrack) {
 		if (!pitScreen.is(':visible')) {
