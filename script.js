@@ -53,6 +53,9 @@ var positionBehind;
 var breakBias;
 var tc;
 var abs;
+var engineBar;
+var gearboxBar;
+var aeroBar;
 
 $(document).ready(function () {
 	initElements();
@@ -129,6 +132,10 @@ function initElements() {
 	breakBias = $('.break_bias');
 	tc = $('.tc');
 	abs = $('.abs');
+	
+	engineBar = $('.engine_bar');
+	gearboxBar = $('.gearbox_bar');
+	aeroBar = $('.aero_bar');
 	
 	// Init RPM bar.
 	rpmBar = $('#rpm_bar');
@@ -265,7 +272,7 @@ function update(json) {
 	lap.html((json.NumberOfLaps > 0 && json.CompletedLaps >= json.NumberOfLaps ? json.NumberOfLaps : json.CompletedLaps + 1) + (json.NumberOfLaps > 0 ? "/" + json.NumberOfLaps : ""));
 	pos.html(json.Position + "/" + json.NumCars);
 	
-	breakBias.html(json.BreakBias >= 0 ? (json.BreakBias * 100.0).toFixed(0) + '%' : '-');
+	breakBias.html(json.BreakBias >= 0 ? 'F: ' + ((1.0 - json.BreakBias) * 100.0).toFixed(0) + '%' : '-');
 	
 	// Temps.
 	waterTemp.html(json.WaterTemperature > 0 ? json.WaterTemperature.toFixed(0) + '°C' : '-');
@@ -407,6 +414,11 @@ function update(json) {
 			switchScreen();
 		}
 	}
+	
+	// Damage overlay.
+	engineBar.css('width', (json.DamageEngine * 100.0).toFixed(1) + '%');
+	gearboxBar.css('width', (json.DamageTransmission * 100.0).toFixed(1) + '%');
+	aeroBar.css('width', (json.DamageAerodynamics * 100.0).toFixed(1) + '%');
 }
 
 function updateTireWear(id, wear, dirt, pressure) {
