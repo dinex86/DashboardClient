@@ -8,16 +8,16 @@ var secondScreen;
 var pitScreen;
 
 // Elements.
+var leds;
 var rpmBar;
-var rpmLeds;
 var fuelLeft;
 var lapTime;
 var lastLap;
 var bestLap;
 var sessionTime;
 var clock;
-var elGear;
-var elSpeed;
+var gear;
+var speed;
 var drsP2p
 var drsP2pLabel;
 var timeInPitLane;
@@ -76,9 +76,9 @@ function initElements() {
 	secondScreen = $('#second_screen')
 	pitScreen = $('#pit_screen');
 	
-	rpmLeds = $('#leds div');
-	elGear = $('.gear');
-	elSpeed = $('.speed');
+	leds = $('#leds');
+	gear = $('.gear');
+	speed = $('.speed');
 	
 	fuelLeft = $('.fuelleft');
 	fuelLaps = $('#fuellaps');
@@ -215,11 +215,11 @@ function startClient() {
 }
 
 function update(json) {
-	var gear = parseFloat(json.Gear);
-	if (gear == 0) {
-		gear = 'N';
-	} else if (gear == -1) {
-		gear = 'R';
+	var gearText = parseFloat(json.Gear);
+	if (gearText == 0) {
+		gearText = 'N';
+	} else if (gearText == -1) {
+		gearText = 'R';
 	}
 	
 	if (json.CarSpeed == undefined) {
@@ -227,8 +227,8 @@ function update(json) {
 		return;
 	}
 	
-	elSpeed.html(json.CarSpeed.toFixed(0));
-	elGear.html(gear);
+	speed.html(json.CarSpeed.toFixed(0));
+	gear.html(gearText);
 	
 	// RPM stuff.	
 	if (json.MaxEngineRpm > 0) {
@@ -256,9 +256,9 @@ function update(json) {
 	$("#led12").toggleClass('red', rpm_per >= 0.97);
 	
 	// Special styles.
-	rpmLeds.toggleClass('blink', rpm_per >= shiftindicator || json.PitLimiter == 1);
-	elGear.toggleClass('shift_indicator', rpm_per >= shiftindicator);
-	elSpeed.toggleClass('speed_drs_active', json.DrsEngaged > 0);
+	leds.toggleClass('shift_indicator', rpm_per >= shiftindicator || json.PitLimiter == 1);
+	gear.toggleClass('shift_indicator', rpm_per >= shiftindicator);
+	speed.toggleClass('speed_drs_active', json.DrsEngaged > 0);
 	
 	// Fuel.
 	fuelLaps.html(json.FuelLapsLeftEstimate > 0 ? (Math.floor(json.FuelLapsLeftEstimate * 10) / 10).toFixed(1) : '-');

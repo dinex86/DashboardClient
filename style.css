@@ -30,7 +30,7 @@ body {
 	animation-direction: alternate;
 }
 
-.blink-bg, .flash-bg, .fast-flash-bg {
+#leds.shift_indicator>div>span, .blink-bg, .flash-bg, .fast-flash-bg {
 	animation-name: flash-bg;
 	animation-duration: 0.25s;
 	animation-iteration-count:infinite;
@@ -38,11 +38,11 @@ body {
 	animation-direction: alternate;
 }
 
-.flash-bg, .fast-flash-bg {
+#leds.shift_indicator>div>span, .flash-bg, .fast-flash-bg {
 	animation-timing-function:steps(1);
 }
 
-.fast-flash-bg {
+#leds.shift_indicator>div>span, .fast-flash-bg {
 	animation-duration: 0.15s;
 }
 
@@ -53,6 +53,7 @@ body {
 #leds {
 	height: 70px;
 	display: grid; /* display: inline-grid;*/
+	justify-items: center;
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
@@ -80,26 +81,32 @@ body {
 	margin-top: 0px;
 }
 
-#leds>div>span {
+#leds>div {
 	display: inline-block;
 	width: 50px;
 	height: 50px;
-	
+	overflow: hidden;
 	border-radius: 50px;
 	border-width: 30px;
 	background-color: #444;
 }
 
-.green>span {
-	background-color: lime !important;
+#leds>div>span {
+	display: inline-block;
+	height: 50px;
+	width: 50px;
 }
 
-.yellow>span {
-	background-color: yellow !important;
+#leds>div.green>span {
+	background-color: lime;
 }
 
-.red>span {
-	background-color: #ff1919 !important;
+#leds>div.yellow>span {
+	background-color: yellow;
+}
+
+#leds>div.red>span {
+	background-color: #ff1919;
 }
 
 .rpm_bar_frame {
