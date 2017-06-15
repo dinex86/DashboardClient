@@ -1,5 +1,4 @@
 var MAXRPM = 0;
-var shiftindicator = 0.95;
 var ws = null;
 
 // Screens.
@@ -240,24 +239,24 @@ function update(json) {
 	
 	rpmBar.width(convertRpmToPercent(rpm_per) + "%");
 	
-	$("#led1").toggleClass('green', rpm_per >= 0.500);
-	$("#led2").toggleClass('green', rpm_per >= 0.575);
-	$("#led3").toggleClass('green', rpm_per >= 0.650);
-	$("#led4").toggleClass('green', rpm_per >= 0.725);
+	$("#led1").toggleClass('active', rpm_per >= 0.75);
+	$("#led2").toggleClass('active', rpm_per >= 0.78);
+	$("#led3").toggleClass('active', rpm_per >= 0.81);
+	$("#led4").toggleClass('active', rpm_per >= 0.84);
 	
-	$("#led5").toggleClass('yellow', rpm_per >= 0.80);
-	$("#led6").toggleClass('yellow', rpm_per >= 0.83);
-	$("#led7").toggleClass('yellow', rpm_per >= 0.86);
-	$("#led8").toggleClass('yellow', rpm_per >= 0.89);
+	$("#led5").toggleClass('active', rpm_per >= 0.87);
+	$("#led6").toggleClass('active', rpm_per >= 0.89);
+	$("#led7").toggleClass('active', rpm_per >= 0.91);
+	$("#led8").toggleClass('active', rpm_per >= 0.93);
 	
-	$("#led9").toggleClass('red',  rpm_per >= 0.91);
-	$("#led10").toggleClass('red', rpm_per >= 0.93);
-	$("#led11").toggleClass('red', rpm_per >= 0.95);
-	$("#led12").toggleClass('red', rpm_per >= 0.97);
+	$("#led9").toggleClass('active',  rpm_per >= 0.95);
+	$("#led10").toggleClass('active', rpm_per >= 0.96);
+	$("#led11").toggleClass('active', rpm_per >= 0.97);
+	$("#led12").toggleClass('active', rpm_per >= 0.98);
 	
 	// Special styles.
-	leds.toggleClass('shift_indicator', rpm_per >= shiftindicator || json.PitLimiter == 1);
-	gear.toggleClass('shift_indicator', rpm_per >= shiftindicator);
+	leds.toggleClass('shift_indicator', rpm_per >= 0.98 || json.PitLimiter == 1);
+	gear.toggleClass('shift_indicator', rpm_per >= 0.95);
 	speed.toggleClass('speed_drs_active', json.DrsEngaged > 0);
 	
 	// Fuel.

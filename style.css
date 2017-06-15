@@ -30,7 +30,7 @@ body {
 	animation-direction: alternate;
 }
 
-#leds.shift_indicator>div>span, .blink-bg, .flash-bg, .fast-flash-bg {
+.blink-bg, .flash-bg, .fast-flash-bg {
 	animation-name: flash-bg;
 	animation-duration: 0.25s;
 	animation-iteration-count:infinite;
@@ -38,11 +38,11 @@ body {
 	animation-direction: alternate;
 }
 
-#leds.shift_indicator>div>span, .flash-bg, .fast-flash-bg {
+.flash-bg, .fast-flash-bg {
 	animation-timing-function:steps(1);
 }
 
-#leds.shift_indicator>div>span, .fast-flash-bg {
+.fast-flash-bg {
 	animation-duration: 0.15s;
 }
 
@@ -51,62 +51,105 @@ body {
 }
 
 #leds {
-	height: 70px;
-	display: grid; /* display: inline-grid;*/
-	justify-items: center;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  height: 70px;
+  display: grid; /* display: inline-grid;*/
+  justify-items: center;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
 #led1,#led12 {
-	margin-top: 45px;
+  margin-top: 45px;
 }
 
 #led2,#led11 {
-	margin-top: 30px;
+  margin-top: 30px;
 }
 
 #led3,#led10 {
-	margin-top: 18px;
+  margin-top: 18px;
 }
 
 #led4,#led9 {
-	margin-top: 9px;
+  margin-top: 9px;
 }
 
 #led5,#led8 {
-	margin-top: 3px;
+  margin-top: 3px;
 }
 
 #led6,#led7 {
-	margin-top: 0px;
-}
-
-#leds>div {
-	display: inline-block;
-	width: 50px;
-	height: 50px;
-	overflow: hidden;
-	border-radius: 50px;
-	border-width: 30px;
-	background-color: #444;
+  margin-top: 0px;
 }
 
 #leds>div>span {
 	display: inline-block;
-	height: 50px;
+	margin: 0 auto;
 	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	transition: all .1s;
 }
 
-#leds>div.green>span {
+#led1>span, #led2>span, #led3>span, #led4>span {
+	background-color: rgba(0, 150, 0, 0.25);
+}
+
+#led5>span, #led6>span, #led7>span, #led8>span {
+	background-color: rgba(150, 150, 0, 0.25);
+}
+
+#led9>span, #led10>span, #led11>span, #led12>span {
+	background-color: rgba(150, 0, 0, 0.25);
+}
+
+#led1.active>span, #led2.active>span, #led3.active>span, #led4.active>span {
 	background-color: lime;
+	box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, rgba(0, 255, 0, 0.7) 0 2px 25px;
 }
 
-#leds>div.yellow>span {
-	background-color: yellow;
+#led5.active>span, #led6.active>span, #led7.active>span, #led8.active>span {
+	background-color: #FF0;
+	box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, rgba(255, 255, 0, 0.7) 0 2px 25px;
 }
 
-#leds>div.red>span {
-	background-color: #ff1919;
+#led9.active>span, #led10.active>span, #led11.active>span, #led12.active>span {
+	background-color: #F00;
+	box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.7) 0 2px 25px;
+}
+
+#leds.shift_indicator>div>span {
+  animation-duration: .25s;
+  animation-iteration-count:infinite;
+}
+
+.shift_indicator>#led1>span, .shift_indicator>#led2>span, .shift_indicator>#led3>span, .shift_indicator>#led4>span {
+	animation-name: blinkGreen;
+}
+
+.shift_indicator>#led5>span, .shift_indicator>#led6>span, .shift_indicator>#led7>span, .shift_indicator>#led8>span {
+	animation-name: blinkYellow;
+}
+
+.shift_indicator>#led9>span, .shift_indicator>#led10>span, .shift_indicator>#led11>span, .shift_indicator>#led12>span {
+	animation-name: blinkRed;
+}
+
+@keyframes blinkGreen {
+    from { background-color: lime; }
+    40% { background-color: rgba(150, 0, 0, 0.15); box-shadow: none;}
+    to { background-color: lime; }
+}
+
+@keyframes blinkYellow {
+    from { background-color: #FF0; }
+    40% { background-color: rgba(150, 0, 0, 0.15); box-shadow: none;}
+    to { background-color: #FF0; }
+}
+
+@keyframes blinkRed {
+    from { background-color: #F00; }
+    40% { background-color: rgba(150, 0, 0, 0.15); box-shadow: none;}
+    to { background-color: #F00; }
 }
 
 .rpm_bar_frame {
