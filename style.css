@@ -91,29 +91,29 @@ body {
 }
 
 #led1>span, #led2>span, #led3>span, #led4>span {
-	background-color: rgba(0, 150, 0, 0.25);
+	background: radial-gradient( rgba(0, 150, 0, 0.25), rgba(0, 150, 0, 0.1));
 }
 
 #led5>span, #led6>span, #led7>span, #led8>span {
-	background-color: rgba(150, 150, 0, 0.25);
+	background: radial-gradient( rgba(150, 150, 0, 0.25), rgba(150, 150, 0, 0.1));
 }
 
 #led9>span, #led10>span, #led11>span, #led12>span {
-	background-color: rgba(150, 0, 0, 0.25);
+	background: radial-gradient( rgba(150, 0, 0, 0.25), rgba(150, 0, 0, 0.1));
 }
 
 #led1.active>span, #led2.active>span, #led3.active>span, #led4.active>span {
-	background-color: lime;
+	background: lime;
 	box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, rgba(0, 255, 0, 0.7) 0 2px 25px;
 }
 
 #led5.active>span, #led6.active>span, #led7.active>span, #led8.active>span {
-	background-color: #FF0;
+	background: #FF0;
 	box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, rgba(255, 255, 0, 0.7) 0 2px 25px;
 }
 
 #led9.active>span, #led10.active>span, #led11.active>span, #led12.active>span {
-	background-color: #F00;
+	background: #F00;
 	box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.7) 0 2px 25px;
 }
 
