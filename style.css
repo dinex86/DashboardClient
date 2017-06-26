@@ -88,6 +88,7 @@ body {
 	height: 50px;
 	border-radius: 50%;
 	transition: all .1s;
+	border: 1px solid rgba(100, 100, 100, 0.2);
 }
 
 #led1>span, #led2>span, #led3>span, #led4>span {
@@ -160,7 +161,7 @@ body {
 	width: 100%;
 	height: 80px;
 	margin-bottom: 0.5em;
-	background-color: #444;
+	background-color: #262626;
 }
 
 #rpm_bar {
@@ -175,7 +176,7 @@ body {
 #rpm_bar>div {
 	position: absolute;
 	width: 2px;
-	background: #999;
+	background: #777;
 	height: 100%;
 	top: 0;
 }
