@@ -238,25 +238,10 @@ function update(json) {
 	var rpm_per = json.EngineRpm/MAXRPM;
 	
 	rpmBar.width(convertRpmToPercent(rpm_per) + "%");
-	
-	$("#led1").toggleClass('active', rpm_per >= 0.835);
-	$("#led2").toggleClass('active', rpm_per >= 0.850);
-	$("#led3").toggleClass('active', rpm_per >= 0.865);
-	$("#led4").toggleClass('active', rpm_per >= 0.870);
-	
-	$("#led5").toggleClass('active', rpm_per >= 0.885);
-	$("#led6").toggleClass('active', rpm_per >= 0.900);
-	$("#led7").toggleClass('active', rpm_per >= 0.915);
-	$("#led8").toggleClass('active', rpm_per >= 0.930);
-	
-	$("#led9").toggleClass('active',  rpm_per >= 0.945);
-	$("#led10").toggleClass('active', rpm_per >= 0.960);
-	$("#led11").toggleClass('active', rpm_per >= 0.975);
-	$("#led12").toggleClass('active', rpm_per >= 0.990);
+	updateLeds(rpm_per, json.PitLimiter);
 	
 	// Special styles.
-	leds.toggleClass('shift_indicator', json.PitLimiter == 1);
-	gear.toggleClass('shift_indicator', rpm_per >= 0.96);
+	gear.toggleClass('shift_indicator', rpm_per >= 0.98);
 	speed.toggleClass('speed_drs_active', json.DrsEngaged > 0);
 	
 	// Fuel.
@@ -474,4 +459,40 @@ function updateMaxRpm(maxrpm_tmp, override) {
 	if (maxrpm_tmp > MAXRPM || override) {
 		MAXRPM = maxrpm_tmp;
 	}
+}
+
+function updateLeds(rpm_per, pitLimiter) {
+	$("#led1").toggleClass('active', rpm_per >= 0.85);
+	$("#led2").toggleClass('active', rpm_per >= 0.86);
+	$("#led3").toggleClass('active', rpm_per >= 0.87);
+	$("#led4").toggleClass('active', rpm_per >= 0.88);
+	
+	$("#led5").toggleClass('active', rpm_per >= 0.89);
+	$("#led6").toggleClass('active', rpm_per >= 0.90);
+	$("#led7").toggleClass('active', rpm_per >= 0.91);
+	$("#led8").toggleClass('active', rpm_per >= 0.92);
+	
+	$("#led9").toggleClass('active',  rpm_per >= 0.93);
+	$("#led10").toggleClass('active', rpm_per >= 0.94);
+	$("#led11").toggleClass('active', rpm_per >= 0.95);
+	$("#led12").toggleClass('active', rpm_per >= 0.96);
+	
+	leds.toggleClass('flash_led', pitLimiter == 1 || rpm_per >= 0.98);
+	leds.toggleClass('rpm_limit', rpm_per >= 0.97);
+}
+
+function testLeds() {
+  var add = 0.005;
+  var start_percent = 0.82;
+  var percent = start_percent;
+  
+  setInterval(function() {
+    percent += add;
+    if (percent <= start_percent || percent >= 1.05) {
+      add *= -1;
+    }
+    
+    updateLeds(percent > 1 ? 1 : percent, 0);
+    rpmBar.width(convertRpmToPercent(percent) + "%");
+  }, 50);
 }

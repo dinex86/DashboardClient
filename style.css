@@ -91,16 +91,10 @@ body {
 	border: 1px solid rgba(100, 100, 100, 0.2);
 }
 
-#led1>span, #led2>span, #led3>span, #led4>span {
-	background: radial-gradient( rgba(0, 150, 0, 0.25), rgba(0, 150, 0, 0.1));
-}
-
-#led5>span, #led6>span, #led7>span, #led8>span {
-	background: radial-gradient( rgba(150, 150, 0, 0.25), rgba(150, 150, 0, 0.1));
-}
-
+#led1>span, #led2>span, #led3>span, #led4>span,
+#led5>span, #led6>span, #led7>span, #led8>span ,
 #led9>span, #led10>span, #led11>span, #led12>span {
-	background: radial-gradient( rgba(150, 0, 0, 0.25), rgba(150, 0, 0, 0.1));
+	background: radial-gradient( rgba(150, 150, 150, 0.25), rgba(150, 150, 150, 0.1));
 }
 
 #led1.active>span, #led2.active>span, #led3.active>span, #led4.active>span {
@@ -113,44 +107,37 @@ body {
 	box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, rgba(255, 255, 0, 0.7) 0 2px 25px;
 }
 
-#led9.active>span, #led10.active>span, #led11.active>span, #led12.active>span {
+#led9.active>span, #led10.active>span, #led11.active>span, #led12.active>span,
+.rpm_limit>#led1>span, .rpm_limit>#led2>span, .rpm_limit>#led3>span, .rpm_limit>#led4>span,
+.rpm_limit>#led5>span, .rpm_limit>#led6>span, .rpm_limit>#led7>span, .rpm_limit>#led8>span,
+.rpm_limit>#led9>span, .rpm_limit>#led10>span, .rpm_limit>#led11>span, .rpm_limit>#led12>span
+ {
 	background: #F00;
 	box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.7) 0 2px 25px;
 }
 
-#leds.shift_indicator>div>span {
-  animation-duration: .25s;
-  animation-iteration-count:infinite;
-}
-
-.shift_indicator>#led1>span, .shift_indicator>#led2>span, .shift_indicator>#led3>span, .shift_indicator>#led4>span {
-	animation-name: blinkGreen;
-}
-
-.shift_indicator>#led5>span, .shift_indicator>#led6>span, .shift_indicator>#led7>span, .shift_indicator>#led8>span {
-	animation-name: blinkYellow;
-}
-
-.shift_indicator>#led9>span, .shift_indicator>#led10>span, .shift_indicator>#led11>span, .shift_indicator>#led12>span {
+.flash_led>#led1>span, .flash_led>#led2>span, .flash_led>#led3>span, .flash_led>#led4>span,
+.flash_led>#led5>span, .flash_led>#led6>span, .flash_led>#led7>span, .flash_led>#led8>span,
+.flash_led>#led9>span, .flash_led>#led10>span, .flash_led>#led11>span, .flash_led>#led12>span
+ {
+	animation-duration: .3s;
+	animation-iteration-count:infinite;
 	animation-name: blinkRed;
 }
 
-@keyframes blinkGreen {
-    from { background-color: lime; }
-    40% { background-color: rgba(150, 0, 0, 0.15); box-shadow: none;}
-    to { background-color: lime; }
-}
-
-@keyframes blinkYellow {
-    from { background-color: #FF0; }
-    40% { background-color: rgba(150, 0, 0, 0.15); box-shadow: none;}
-    to { background-color: #FF0; }
-}
-
 @keyframes blinkRed {
-    from { background-color: #F00; }
-    40% { background-color: rgba(150, 0, 0, 0.15); box-shadow: none;}
-    to { background-color: #F00; }
+    from {
+		background-color: #F00; 
+		box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.7) 0 2px 25px;
+	}
+    40% {
+		background: radial-gradient( rgba(150, 150, 150, 0.25), rgba(150, 150, 150, 0.1));
+		box-shadow: none;
+	}
+    to {
+		background-color: #F00; 
+		box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.7) 0 2px 25px;
+	}
 }
 
 .rpm_bar_frame {
@@ -167,10 +154,10 @@ body {
 #rpm_bar {
 	height: 100%;
 	width: 0%;
-	transition: width 100ms;
+	transition: width 50ms;
 	
 	background: linear-gradient(to right, lime 0%,lime 25%,yellow 45%,orange 60%,red 90%);
-	background-size: 100vw 100%;
+	background-size: 800px 100%;
 }
 
 #rpm_bar>div {
