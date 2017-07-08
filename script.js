@@ -145,7 +145,7 @@ function initElements() {
 	}
 	
 	// Add new grid lines.
-	var percentages = Array(15, 25, 50, 70, 80, 90, 95, 98);
+	var percentages = Array(25, 50, 70, 80, 90, 93, 97, 98);
 	for (var i = 0; i < percentages.length; i++) {
 		var line = document.createElement("div");
 		line.style.left = convertRpmToPercent(percentages[i] / 100).toFixed(2) + "%";
@@ -309,6 +309,8 @@ function update(json) {
 	sessionTime.html(json.SessionTimeRemaining > 0 ? formatTime(json.SessionTimeRemaining) : getSessionName(json));
 	clock.html(moment().local().format("HH:mm:ss"));
 	
+	lapTime.toggleClass('invalid', json.CurrentLapValid == 0);
+	
 	//Delta
 	if (json.LapTimeCurrentSelf > 0 && json.LapTimeBestSelf > 0) {
 		var deltaTime = json.DeltaBestSelf;
@@ -377,6 +379,8 @@ function update(json) {
 			var sufficient = json.FuelLeft >= json.FuelRequiredUntilSessionEnd;
 			fuelRequired.toggleClass('fuel_required_sufficient', sufficient);
 			fuelRequired.toggleClass('fuel_required_insufficient', !sufficient);
+		} else {
+			timeInPitLane.html('-');
 		}
 	} else {
 		// Only call once.
@@ -452,7 +456,7 @@ function isNumber(n) {
 }
 
 function convertRpmToPercent(rpm_percent) {
-	return Math.pow(rpm_percent, 2) * 100;
+	return Math.pow(rpm_percent, 3) * 100;
 }
 
 function updateMaxRpm(maxrpm_tmp, override) {
@@ -462,23 +466,24 @@ function updateMaxRpm(maxrpm_tmp, override) {
 }
 
 function updateLeds(rpm_per, pitLimiter) {
-	$("#led1").toggleClass('active', rpm_per >= 0.85);
-	$("#led2").toggleClass('active', rpm_per >= 0.86);
-	$("#led3").toggleClass('active', rpm_per >= 0.87);
-	$("#led4").toggleClass('active', rpm_per >= 0.88);
+	$("#led1").toggleClass('active', pitLimiter == 0 && rpm_per >= 0.85);
+	$("#led2").toggleClass('active', pitLimiter == 0 && rpm_per >= 0.86);
+	$("#led3").toggleClass('active', pitLimiter == 0 && rpm_per >= 0.87);
+	$("#led4").toggleClass('active', pitLimiter == 0 && rpm_per >= 0.88);
 	
-	$("#led5").toggleClass('active', rpm_per >= 0.89);
-	$("#led6").toggleClass('active', rpm_per >= 0.90);
-	$("#led7").toggleClass('active', rpm_per >= 0.91);
-	$("#led8").toggleClass('active', rpm_per >= 0.92);
+	$("#led5").toggleClass('active', pitLimiter == 0 && rpm_per >= 0.89);
+	$("#led6").toggleClass('active', pitLimiter == 0 && rpm_per >= 0.90);
+	$("#led7").toggleClass('active', pitLimiter == 0 && rpm_per >= 0.91);
+	$("#led8").toggleClass('active', pitLimiter == 0 && rpm_per >= 0.92);
 	
-	$("#led9").toggleClass('active',  rpm_per >= 0.93);
-	$("#led10").toggleClass('active', rpm_per >= 0.94);
-	$("#led11").toggleClass('active', rpm_per >= 0.95);
-	$("#led12").toggleClass('active', rpm_per >= 0.96);
+	$("#led9").toggleClass('active',  pitLimiter == 0 && rpm_per >= 0.93);
+	$("#led10").toggleClass('active', pitLimiter == 0 && rpm_per >= 0.94);
+	$("#led11").toggleClass('active', pitLimiter == 0 && rpm_per >= 0.95);
+	$("#led12").toggleClass('active', pitLimiter == 0 && rpm_per >= 0.96);
 	
-	leds.toggleClass('flash_led', pitLimiter == 1 || rpm_per >= 0.98);
-	leds.toggleClass('rpm_limit', rpm_per >= 0.97);
+	leds.toggleClass('pit_limiter', pitLimiter == 1);
+	leds.toggleClass('rpm_limit', pitLimiter == 0 && rpm_per >= 0.97);
+	leds.toggleClass('rpm_max', pitLimiter == 0 && rpm_per >= 0.98);
 }
 
 function testLeds() {

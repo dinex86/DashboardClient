@@ -116,13 +116,21 @@ body {
 	box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.7) 0 2px 25px;
 }
 
-.flash_led>#led1>span, .flash_led>#led2>span, .flash_led>#led3>span, .flash_led>#led4>span,
-.flash_led>#led5>span, .flash_led>#led6>span, .flash_led>#led7>span, .flash_led>#led8>span,
-.flash_led>#led9>span, .flash_led>#led10>span, .flash_led>#led11>span, .flash_led>#led12>span
+.rpm_max>#led1>span, .rpm_max>#led2>span, .rpm_max>#led3>span, .rpm_max>#led4>span,
+.rpm_max>#led5>span, .rpm_max>#led6>span, .rpm_max>#led7>span, .rpm_max>#led8>span,
+.rpm_max>#led9>span, .rpm_max>#led10>span, .rpm_max>#led11>span, .rpm_max>#led12>span
  {
 	animation-duration: .3s;
 	animation-iteration-count:infinite;
 	animation-name: blinkRed;
+}
+
+.pit_limiter>#led1>span, .pit_limiter>#led2>span, .pit_limiter>#led3>span,
+.pit_limiter>#led10>span, .pit_limiter>#led11>span, .pit_limiter>#led12>span
+ {
+	animation-duration: .3s;
+	animation-iteration-count:infinite;
+	animation-name: blinkBlue;
 }
 
 @keyframes blinkRed {
@@ -137,6 +145,21 @@ body {
     to {
 		background-color: #F00; 
 		box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.7) 0 2px 25px;
+	}
+}
+
+@keyframes blinkBlue {
+    from {
+		background-color: #00F; 
+		box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(0, 0, 255, 0.7) 0 2px 25px;
+	}
+    40% {
+		background: radial-gradient( rgba(150, 150, 150, 0.25), rgba(150, 150, 150, 0.1));
+		box-shadow: none;
+	}
+    to {
+		background-color: #00F; 
+		box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(0, 0, 255, 0.7) 0 2px 25px;
 	}
 }
 
@@ -295,7 +318,7 @@ position: fixed;
 	border: 2px solid white;
 }
 		
-.positive {
+.positive, .invalid {
 	color: #ff1919;
 }
 
